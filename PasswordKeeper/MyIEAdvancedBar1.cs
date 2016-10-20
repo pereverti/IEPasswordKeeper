@@ -37,6 +37,8 @@ namespace PasswordKeeper
         private Button btnSettings;
         private Button btnUserUpdateCancel;
         private Button btnDeleteUser;
+        private Button btnAutoTypeTop;
+        private Button btnAutoTypeBottom;
 
         #region Component Designer generated code
         /// <summary>
@@ -75,6 +77,8 @@ namespace PasswordKeeper
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnNewPassword = new System.Windows.Forms.Button();
             this.toolTipPassword = new System.Windows.Forms.ToolTip(this.components);
+            this.btnAutoTypeTop = new System.Windows.Forms.Button();
+            this.btnAutoTypeBottom = new System.Windows.Forms.Button();
             lblListPasswords = new System.Windows.Forms.Label();
             lblTitle = new System.Windows.Forms.Label();
             lblLogin = new System.Windows.Forms.Label();
@@ -296,6 +300,8 @@ namespace PasswordKeeper
             this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPasswords.Controls.Add(this.btnAutoTypeBottom);
+            this.pnlPasswords.Controls.Add(this.btnAutoTypeTop);
             this.pnlPasswords.Controls.Add(this.btnSettings);
             this.pnlPasswords.Controls.Add(this.lstPasswords);
             this.pnlPasswords.Controls.Add(this.btnLogout);
@@ -349,11 +355,33 @@ namespace PasswordKeeper
             // 
             this.toolTipPassword.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // btnAutoTypeTop
+            // 
+            this.btnAutoTypeTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutoTypeTop.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAutoTypeTop.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoTypeTop.Image")));
+            this.btnAutoTypeTop.Location = new System.Drawing.Point(277, 71);
+            this.btnAutoTypeTop.Name = "btnAutoTypeTop";
+            this.btnAutoTypeTop.Size = new System.Drawing.Size(23, 23);
+            this.btnAutoTypeTop.TabIndex = 26;
+            this.btnAutoTypeTop.UseVisualStyleBackColor = true;
+            // 
+            // btnAutoTypeBottom
+            // 
+            this.btnAutoTypeBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutoTypeBottom.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAutoTypeBottom.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoTypeBottom.Image")));
+            this.btnAutoTypeBottom.Location = new System.Drawing.Point(277, 591);
+            this.btnAutoTypeBottom.Name = "btnAutoTypeBottom";
+            this.btnAutoTypeBottom.Size = new System.Drawing.Size(23, 23);
+            this.btnAutoTypeBottom.TabIndex = 27;
+            this.btnAutoTypeBottom.UseVisualStyleBackColor = true;
+            // 
             // MyIEAdvancedBar1
             // 
             this.Controls.Add(lblTitle);
-            this.Controls.Add(this.pnlLogin);
             this.Controls.Add(this.pnlPasswords);
+            this.Controls.Add(this.pnlLogin);
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
