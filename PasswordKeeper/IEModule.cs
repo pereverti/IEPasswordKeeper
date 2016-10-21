@@ -60,6 +60,7 @@ namespace PasswordKeeper
             this.advBarItemPasswordLeftPane.BarType = "PasswordKeeper.MyIEAdvancedBar1";
             this.advBarItemPasswordLeftPane.Id = "{735574D4-000F-4945-9343-B03C6FB871B5}";
             this.advBarItemPasswordLeftPane.MenuText = "Password Keeper";
+            this.advBarItemPasswordLeftPane.Shortcut = System.Windows.Forms.Shortcut.AltF12;
             this.advBarItemPasswordLeftPane.Visible = true;
             // 
             // cmdItemFillFields
@@ -148,9 +149,13 @@ namespace PasswordKeeper
             cmdItemFillFields.OnClick += cmdItemFillFields_OnClick;
             cmdItemShowHide.OnClick += CmdItemShowHide_OnClick;
 
+            // :radioactive: Test for shared data
             SendMessageToAll(Tools.WM_UPDATE_OPTIONS, IntPtr.Zero, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Show or hide the left pane
+        /// </summary>
         private void CmdItemShowHide_OnClick(object sender, object htmlDoc)
         {
             // Show / Hide the left pane

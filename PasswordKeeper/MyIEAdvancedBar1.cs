@@ -68,6 +68,7 @@ namespace PasswordKeeper
             this.ctxMenuCopy = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripCopyUser = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripCopyPassword = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlLogin = new System.Windows.Forms.Panel();
             this.btnDeleteUser = new System.Windows.Forms.Button();
             this.btnUserUpdateCancel = new System.Windows.Forms.Button();
@@ -86,7 +87,6 @@ namespace PasswordKeeper
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnNewPassword = new System.Windows.Forms.Button();
             this.toolTipPassword = new System.Windows.Forms.ToolTip(this.components);
-            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             lblListPasswords = new System.Windows.Forms.Label();
             lblTitle = new System.Windows.Forms.Label();
             lblLogin = new System.Windows.Forms.Label();
@@ -108,7 +108,7 @@ namespace PasswordKeeper
             // 
             // lblTitle
             // 
-            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             lblTitle.AutoSize = true;
             lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -158,8 +158,8 @@ namespace PasswordKeeper
             // 
             // lstPasswords
             // 
-            this.lstPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lstPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstPasswords.ContextMenuStrip = this.ctxMenuCopy;
             this.lstPasswords.FormattingEnabled = true;
@@ -177,7 +177,7 @@ namespace PasswordKeeper
             this.toolStripCopyPassword,
             this.copyURLToolStripMenuItem});
             this.ctxMenuCopy.Name = "ctxMenuCopy";
-            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 92);
+            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 70);
             this.ctxMenuCopy.Text = "Clipboard Copy";
             // 
             // toolStripCopyUser
@@ -196,9 +196,17 @@ namespace PasswordKeeper
             this.toolStripCopyPassword.Text = "Copy Password";
             this.toolStripCopyPassword.Click += new System.EventHandler(this.toolStripCopyPassword_Click);
             // 
+            // copyURLToolStripMenuItem
+            // 
+            this.copyURLToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyURLToolStripMenuItem.Image")));
+            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.copyURLToolStripMenuItem.Text = "Copy URL";
+            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            // 
             // pnlLogin
             // 
-            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlLogin.Controls.Add(this.btnDeleteUser);
             this.pnlLogin.Controls.Add(this.btnUserUpdateCancel);
@@ -245,7 +253,7 @@ namespace PasswordKeeper
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(113, 65);
@@ -280,7 +288,7 @@ namespace PasswordKeeper
             // 
             // txtDisplayName
             // 
-            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(113, 94);
             this.txtDisplayName.Name = "txtDisplayName";
@@ -312,7 +320,7 @@ namespace PasswordKeeper
             // 
             // txtPassword
             // 
-            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(113, 36);
@@ -324,7 +332,7 @@ namespace PasswordKeeper
             // 
             // txtLogin
             // 
-            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLogin.Location = new System.Drawing.Point(113, 7);
             this.txtLogin.Name = "txtLogin";
@@ -333,8 +341,8 @@ namespace PasswordKeeper
             // 
             // pnlPasswords
             // 
-            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPasswords.Controls.Add(this.btnAutoTypeBottom);
             this.pnlPasswords.Controls.Add(this.btnAutoTypeTop);
@@ -353,7 +361,7 @@ namespace PasswordKeeper
             // 
             // btnAutoTypeBottom
             // 
-            this.btnAutoTypeBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutoTypeBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAutoTypeBottom.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAutoTypeBottom.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoTypeBottom.Image")));
             this.btnAutoTypeBottom.Location = new System.Drawing.Point(277, 591);
@@ -361,6 +369,7 @@ namespace PasswordKeeper
             this.btnAutoTypeBottom.Size = new System.Drawing.Size(23, 23);
             this.btnAutoTypeBottom.TabIndex = 27;
             this.btnAutoTypeBottom.UseVisualStyleBackColor = true;
+            this.btnAutoTypeBottom.Click += new System.EventHandler(this.btnAutoType_Click);
             // 
             // btnAutoTypeTop
             // 
@@ -372,6 +381,7 @@ namespace PasswordKeeper
             this.btnAutoTypeTop.Size = new System.Drawing.Size(23, 23);
             this.btnAutoTypeTop.TabIndex = 26;
             this.btnAutoTypeTop.UseVisualStyleBackColor = true;
+            this.btnAutoTypeTop.Click += new System.EventHandler(this.btnAutoType_Click);
             // 
             // btnSettings
             // 
@@ -412,14 +422,6 @@ namespace PasswordKeeper
             // toolTipPassword
             // 
             this.toolTipPassword.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
-            // copyURLToolStripMenuItem
-            // 
-            this.copyURLToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyURLToolStripMenuItem.Image")));
-            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.copyURLToolStripMenuItem.Text = "Copy URL";
-            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
             // MyIEAdvancedBar1
             // 
@@ -656,6 +658,43 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)lstPasswords.SelectedItem).Url);
         }
 
+        /// <summary>
+        /// Click on auto-type buttons
+        /// </summary>
+        private void btnAutoType_Click(object sender, EventArgs e)
+        {
+            mshtml.IHTMLElement elem = HTMLDocument.getElementById("Name");
+            if (elem is mshtml.HTMLInputElement)
+            {
+                mshtml.HTMLInputElement input = elem as mshtml.HTMLInputElement;
+                input.disabled = true;
+                input.click();
+            }
+
+
+                if (lstPasswords.SelectedItem == null)
+                return;
+
+            PasswordModel currentPassword = ((PasswordModel)lstPasswords.SelectedItem);
+
+            mshtml.IHTMLElementCollection inputCollection = HTMLDocument.getElementsByTagName("input");
+
+            foreach (mshtml.IHTMLElement element in inputCollection)
+            {
+                if (element.id != null)
+                {
+                    if (element.id.ToLower().Contains("login"))
+                    {
+                        element.setAttribute("value", currentPassword.Login);
+                    }
+                    else if (element.id.ToLower().Contains("pass"))
+                    {
+                        element.setAttribute("value", currentPassword.Password);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -880,4 +919,3 @@ namespace PasswordKeeper
         }
     }
 }
-
