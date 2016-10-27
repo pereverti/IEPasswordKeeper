@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Liphsoft.Crypto.Argon2;
 
 namespace PasswordKeeper
 {
@@ -13,10 +14,14 @@ namespace PasswordKeeper
         {
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
+                PasswordHasher hasher = new PasswordHasher();
+
+                string passwordHash = hasher.Hash(userToCreate.Password);
+
                 User newUser = new User()
                 {
                     Login = userToCreate.Login,
-                    Password = userToCreate.Password,
+                    PasswordHash = passwordHash,
                     DisplayName = userToCreate.DisplayName,
                     CreationDate = userToCreate.CreationDate,
                     IsActive = userToCreate.IsActive
@@ -33,11 +38,15 @@ namespace PasswordKeeper
         /// <param name="userToUpdate">User to update</param>
         internal void Update(UserModel userToUpdate)
         {
+            PasswordHasher hasher = new PasswordHasher();
+
+            string passwordHash = hasher.Hash(userToUpdate.Password);
+
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 User currentUser = GetUser(context, userToUpdate.Id);
 
-                currentUser.Password = userToUpdate.Password;
+                currentUser.PasswordHash = passwordHash;
                 currentUser.DisplayName = userToUpdate.DisplayName;
 
                 context.SaveChanges();
@@ -70,19 +79,21 @@ namespace PasswordKeeper
         {
             UserModel user = null;
 
-            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+                using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 User currentUser = (from usr in context.Users
-                                    where usr.Login.ToLower().Equals(login.ToLower()) && usr.Password.Equals(password) && usr.IsActive
+                                    where usr.Login.ToLower().Equals(login.ToLower()) && usr.IsActive
                                     select usr).FirstOrDefault();
 
-                if (currentUser != null)
+                PasswordHasher hasher = new PasswordHasher();
+
+                if (currentUser != null && hasher.Verify(currentUser.PasswordHash, password))
                 {
                     user = new UserModel()
                     {
                         Id = currentUser.Id,
                         Login = currentUser.Login,
-                        Password = currentUser.Password,
+                        Password = password,
                         DisplayName = currentUser.DisplayName,
                         IsActive = currentUser.IsActive,
                         CreationDate = currentUser.CreationDate

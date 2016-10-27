@@ -22,7 +22,7 @@ namespace PasswordKeeper
     
         public int Id { get; set; }
         public string Login { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string DisplayName { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime CreationDate { get; set; }
