@@ -1000,7 +1000,7 @@ namespace PasswordKeeper
 
         private void olvPasswords_DoubleClick(object sender, EventArgs e)
         {
-            // Test 0
+            // Test 00
         }
     }
 }
