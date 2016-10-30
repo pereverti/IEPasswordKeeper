@@ -6,7 +6,7 @@ namespace PasswordKeeper
 {
     public static class Tools
     {
-        public enum PasswordAction
+        public enum PasswordAction // TEST
         {
             Create,
             Edit
