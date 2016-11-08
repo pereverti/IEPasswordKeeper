@@ -10,11 +10,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="255" />
           <Property Name="Password" Type="nvarchar" MaxLength="255" />
-          <Property Name="Url" Type="nvarchar(max)" />
-          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="255" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
@@ -30,7 +30,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Password_User">
+        <Association Name="FK_Password_Password">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Password" Type="Self.Password" Multiplicity="*" />
           <ReferentialConstraint>
@@ -45,7 +45,7 @@
         <EntityContainer Name="EntityModelStoreContainer">
           <EntitySet Name="Password" EntityType="Self.Password" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Password_User" Association="Self.FK_Password_User">
+          <AssociationSet Name="FK_Password_Password" Association="Self.FK_Password_Password">
             <End Role="User" EntitySet="User" />
             <End Role="Password" EntitySet="Password" />
           </AssociationSet>
@@ -61,10 +61,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Password1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="DisplayName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="EntityModel.FK_Password_User" FromRole="Password" ToRole="User" />

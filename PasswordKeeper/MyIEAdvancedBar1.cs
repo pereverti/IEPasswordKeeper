@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using IE = Interop.SHDocVw;
 using AddinExpress.IE;
 using System.Collections.Generic;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto;
 
 namespace PasswordKeeper
 {
@@ -903,7 +905,7 @@ namespace PasswordKeeper
 
             UserController controlUser = new UserController();
 
-            CurrentUser = controlUser.GetUser(txtLogin.Text.Trim(), txtPassword.Text.Trim());
+            CurrentUser = controlUser.GetUser(txtLogin.Text.Trim(), txtPassword.Text);
 
             if (CurrentUser == null)
             {
@@ -941,17 +943,35 @@ namespace PasswordKeeper
             if (!CheckUserFieldsEmpty())
                 return false;
 
+            string userLogin = txtLogin.Text.Trim();
+
             // Check email format
-            if (!Tools.IsValidEmail(txtLogin.Text.Trim()))
+            if (!Tools.IsValidEmail(userLogin))
             {
                 MessageBox.Show("Email is not valid !", "Abort", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
                 return false;
             }
 
+            // Check passwords
+            if (!txtPassword.Text.Equals(txtConfirmPassword.Text))
+            {
+                MessageBox.Show("Passwords are different !", "Abort", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+                return false;
+            }
+
+            // Check if the user already exists
+            if (new PasswordKeeper.UserController().GetUserCount(userLogin) > 0)
+            {
+                MessageBox.Show("This email is already used, please choose another one !", "Abort", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+                return false;
+            }
+
             CurrentUser = new UserModel()
             {
-                Login = txtLogin.Text.Trim(),
+                Login = userLogin,
                 Password = txtPassword.Text.Trim(),
                 DisplayName = txtDisplayName.Text.Trim(),
                 IsActive = true,

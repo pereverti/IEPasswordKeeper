@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Paddings;
+using System;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PasswordKeeper
@@ -73,6 +76,20 @@ namespace PasswordKeeper
             }
 
             return match.Groups[1].Value + domainName;
+        }
+
+        internal static string AESEncryption(string plain, string key, string salt, Pkcs7Padding padding)
+        {
+            BCEngine bcEngine = new BCEngine(new AesEngine(), Encoding.UTF8);
+            bcEngine.SetPadding(padding);
+            return bcEngine.Encrypt(plain, key);
+        }
+
+        internal static string AESDecryption(string cipher, string key, string salt, Pkcs7Padding padding)
+        {
+            BCEngine bcEngine = new BCEngine(new AesEngine(), Encoding.UTF8);
+            bcEngine.SetPadding(padding);
+            return bcEngine.Decrypt(cipher, key);
         }
     }
 }

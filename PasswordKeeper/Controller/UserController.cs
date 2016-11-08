@@ -6,6 +6,9 @@ namespace PasswordKeeper
 {
     internal class UserController
     {
+        private string Salt = "j_iz>/?L*T&}ac23B)@jup{sJPH}Aa";
+        private string Pepper = "f%kPk}6[;<0TEhaJKceLXgjq<4<&qP";
+
         /// <summary>
         /// Create new user
         /// </summary>
@@ -16,7 +19,7 @@ namespace PasswordKeeper
             {
                 PasswordHasher hasher = new PasswordHasher();
 
-                string passwordHash = hasher.Hash(userToCreate.Password);
+                string passwordHash = hasher.Hash(string.Concat(Salt, userToCreate.Password, Pepper));
 
                 User newUser = new User()
                 {
@@ -40,7 +43,7 @@ namespace PasswordKeeper
         {
             PasswordHasher hasher = new PasswordHasher();
 
-            string passwordHash = hasher.Hash(userToUpdate.Password);
+            string passwordHash = hasher.Hash(string.Concat(Salt, userToUpdate.Password, Pepper));
 
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
@@ -79,7 +82,7 @@ namespace PasswordKeeper
         {
             UserModel user = null;
 
-                using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 User currentUser = (from usr in context.Users
                                     where usr.Login.ToLower().Equals(login.ToLower()) && usr.IsActive
@@ -87,7 +90,7 @@ namespace PasswordKeeper
 
                 PasswordHasher hasher = new PasswordHasher();
 
-                if (currentUser != null && hasher.Verify(currentUser.PasswordHash, password))
+                if (currentUser != null && hasher.Verify(currentUser.PasswordHash, string.Concat(Salt, password, Pepper)))
                 {
                     user = new UserModel()
                     {
@@ -102,6 +105,21 @@ namespace PasswordKeeper
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Count how much login exist for a given login
+        /// </summary>
+        /// <param name="login">User login to control</param>
+        /// <returns>Occurs of the login in database</returns>
+        internal int GetUserCount(string login)
+        {
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            {
+                return (from usr in context.Users
+                                    where usr.Login.ToLower().Equals(login.ToLower()) && usr.IsActive
+                                    select usr).Count();
+            }
         }
 
         /// <summary>
