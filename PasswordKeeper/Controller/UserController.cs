@@ -6,8 +6,8 @@ namespace PasswordKeeper
 {
     internal class UserController
     {
-        private string Salt = "j_iz>/?L*T&}ac23B)@jup{sJPH}Aa";
-        private string Pepper = "f%kPk}6[;<0TEhaJKceLXgjq<4<&qP";
+        private const string Salt = "j_iz>/?L*T&}ac23B)@jup{sJPH}Aa";
+        private const string Pepper = "f%kPk}6[;<0TEhaJKceLXgjq<4<&qP";
 
         /// <summary>
         /// Create new user

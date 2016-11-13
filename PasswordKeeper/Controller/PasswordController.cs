@@ -1,25 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Paddings;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace PasswordKeeper
 {
     internal class PasswordController
     {
+        private const string Salt = "r6U+U]Do>vGyLkLg?`()M726zZ{'Vj";
+        private const string Pepper = "|@EKjLU?F./#1:N8!bG7A$AttqD!2I";
+        private const string SaltKey = "~=g^QrT);zC19[3}`9Wy~oj!5eIxpF";
+        private const string PepperKey = "%+&j?c;o%Gy&cWRxYvIghdZr!#*/Jf";
+
+        private string Key256Bits;
+
+        internal PasswordController()
+        {
+        }
+
+        internal PasswordController(string key)
+        {
+            Key256Bits = Get256BitsKey(key);
+
+            //Key256Bits = "%+&j?c;o%Gy&cWRxYvIghdZr!#*/Jf12";
+        }
+
         /// <summary>
         /// Create a new password
         /// </summary>
         /// <param name="pwdToCreate">Password to create</param>
         internal void Create(PasswordModel pwdToCreate)
         {
+            BCEngine engine = new BCEngine(new AesEngine(), Encoding.UTF8);
+            engine.SetPadding(new Pkcs7Padding());
+
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 Password newPwd = new Password()
                 {
-                    Login = pwdToCreate.Login,
-                    Password1 = pwdToCreate.Password,
+                    Login = engine.Encrypt(string.Concat(Salt, pwdToCreate.Login, Pepper), Key256Bits),
+                    Password1 = engine.Encrypt(string.Concat(Salt, pwdToCreate.Password, Pepper), Key256Bits),
                     DisplayName = pwdToCreate.DisplayName,
-                    Url = pwdToCreate.Url,
-                    Notes = pwdToCreate.Notes,
+                    Url = engine.Encrypt(string.Concat(Salt, pwdToCreate.Url, Pepper), Key256Bits),
+                    Notes = engine.Encrypt(string.Concat(Salt, pwdToCreate.Notes, Pepper), Key256Bits),
                     CreationDate = pwdToCreate.CreationDate,
                     IsActive = pwdToCreate.IsActive,
                     UserId = pwdToCreate.UserId
@@ -36,15 +60,18 @@ namespace PasswordKeeper
         /// <param name="pwdToUpdate">Password to update</param>
         internal void Update(PasswordModel pwdToUpdate)
         {
+            BCEngine engine = new BCEngine(new AesEngine(), Encoding.UTF8);
+            engine.SetPadding(new Pkcs7Padding());
+
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 Password pass = GetPassword(context, pwdToUpdate.Id);
 
                 pass.DisplayName = pwdToUpdate.DisplayName;
-                pass.Login = pwdToUpdate.Login;
-                pass.Password1 = pwdToUpdate.Password;
-                pass.Url = pwdToUpdate.Url;
-                pass.Notes = pwdToUpdate.Notes;
+                pass.Login = engine.Encrypt(string.Concat(Salt, pwdToUpdate.Login, Pepper), Key256Bits);
+                pass.Password1 = engine.Encrypt(string.Concat(Salt, pwdToUpdate.Password, Pepper), Key256Bits);
+                pass.Url = engine.Encrypt(string.Concat(Salt, pwdToUpdate.Url, Pepper), Key256Bits);
+                pass.Notes = engine.Encrypt(string.Concat(Salt, pwdToUpdate.Notes, Pepper), Key256Bits);
 
                 context.SaveChanges();
             }
@@ -81,16 +108,19 @@ namespace PasswordKeeper
                                        where pass.IsActive && pass.UserId == userId
                                        select pass).ToList();
 
+                BCEngine engine = new BCEngine(new AesEngine(), Encoding.UTF8);
+                engine.SetPadding(new Pkcs7Padding());
+
                 foreach (Password pwd in pwds)
                 {
                     passwords.Add(new PasswordModel()
                     {
                         Id = pwd.Id,
                         DisplayName = pwd.DisplayName,
-                        Login = pwd.Login,
-                        Password = pwd.Password1,
-                        Url = pwd.Url,
-                        Notes = pwd.Notes,
+                        Login = GetDecryptedString(engine, pwd.Login),
+                        Password = GetDecryptedString(engine, pwd.Password1),
+                        Url = GetDecryptedString(engine, pwd.Url),
+                        Notes = GetDecryptedString(engine, pwd.Notes),
                         CreationDate = pwd.CreationDate,
                         IsActive = pwd.IsActive,
                         UserId = pwd.UserId
@@ -99,6 +129,40 @@ namespace PasswordKeeper
             }
 
             return passwords;
+        }
+
+        /// <summary>
+        /// Build a 256 bits string from the key (user login), a salt and a pepper string
+        /// </summary>
+        /// <param name="key">User key (login)</param>
+        /// <returns>256 bits key string</returns>
+        private string Get256BitsKey(string key)
+        {
+            string saltedKey = string.Concat(SaltKey, key, PepperKey);
+            int middle = saltedKey.Length / 2;
+
+            string left = saltedKey.Remove(middle);
+
+            left = left.Remove(0, left.Length - 16);
+
+            string right = saltedKey.Substring(middle, saltedKey.Length - middle);
+
+            right = right.Substring(0, 16);
+
+            return string.Concat(left, right);
+        }
+
+        /// <summary>
+        /// Decrypt cipher string and remove salt and pepper
+        /// </summary>
+        /// <param name="engine">Cipher engine</param>
+        /// <param name="cipher">Cipher text</param>
+        /// <returns>Decrypted string</returns>
+        private string GetDecryptedString(BCEngine engine, string cipher)
+        {
+            string saltedString = engine.Decrypt(cipher, Key256Bits);
+
+            return saltedString.Replace(Salt, string.Empty).Replace(Pepper, string.Empty);
         }
 
         /// <summary>

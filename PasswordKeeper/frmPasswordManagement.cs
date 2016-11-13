@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PasswordKeeper
@@ -14,18 +7,20 @@ namespace PasswordKeeper
     {
         private readonly Tools.PasswordAction Mode;
         private readonly int UserId;
+        private readonly string PasswordKey;
 
         private PasswordModel Passwd { get; set; }
 
-        public frmPasswordManagement(Tools.PasswordAction typeOfAction, int usrId)
+        public frmPasswordManagement(Tools.PasswordAction typeOfAction, int usrId, string key)
         {
             InitializeComponent();
 
             Mode = typeOfAction;
             UserId = usrId;
+            PasswordKey = key;
         }
 
-        public frmPasswordManagement(Tools.PasswordAction typeOfAction, int usrId, PasswordModel password) : this(typeOfAction, usrId)
+        public frmPasswordManagement(Tools.PasswordAction typeOfAction, int usrId, string key, PasswordModel password) : this(typeOfAction, usrId, key)
         {
             Passwd = password;
         }
@@ -100,7 +95,7 @@ namespace PasswordKeeper
         /// </summary>
         private void SavePassword()
         {
-            PasswordController passControler = new PasswordController();
+            PasswordController passControler = new PasswordController(PasswordKey);
 
             MapFieldsToObject();
 
@@ -140,13 +135,14 @@ namespace PasswordKeeper
                 {
                     CreationDate = DateTime.Now,
                     IsActive = true,
-                    UserId = UserId
+                    UserId = UserId,
+                    Key = PasswordKey
                 };
             }
 
             Passwd.DisplayName = txtDisplayName.Text.Trim();
             Passwd.Login = txtUserName.Text.Trim();
-            Passwd.Password = txtPassword.Text.Trim();
+            Passwd.Password = txtPassword.Text;
             Passwd.Url = txtUrl.Text.Trim();
             Passwd.Notes = txtNotes.Text.Trim();
         }

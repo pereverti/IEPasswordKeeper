@@ -623,7 +623,7 @@ namespace PasswordKeeper
         {
             DialogResult result = DialogResult.Cancel;
 
-            using (frmPasswordManagement newPassword = new frmPasswordManagement(Tools.PasswordAction.Create, CurrentUser.Id))
+            using (frmPasswordManagement newPassword = new frmPasswordManagement(Tools.PasswordAction.Create, CurrentUser.Id, CurrentUser.Login))
             {
                 result = newPassword.ShowDialog();
             }
@@ -650,7 +650,7 @@ namespace PasswordKeeper
         {
             DialogResult result = DialogResult.Cancel;
 
-            using (frmPasswordManagement updatedPassword = new frmPasswordManagement(Tools.PasswordAction.Edit, CurrentUser.Id, (PasswordModel)lstPasswords.SelectedItem))
+            using (frmPasswordManagement updatedPassword = new frmPasswordManagement(Tools.PasswordAction.Edit, CurrentUser.Id, CurrentUser.Login, (PasswordModel)lstPasswords.SelectedItem))
             {
                 result = updatedPassword.ShowDialog();
             }
@@ -803,12 +803,12 @@ namespace PasswordKeeper
 
         private void LoadPasswordsList()
         {
-            lstPasswords.DataSource = new PasswordController().GetList(CurrentUser.Id);
+            lstPasswords.DataSource = new PasswordController(CurrentUser.Login).GetList(CurrentUser.Id);
             lstPasswords.DisplayMember = "DisplayName";
 
             // Fast ListView
             //olvPasswords.DataSource = new PasswordController().GetList(CurrentUser.Id);
-            olvPasswords.SetObjects(new PasswordController().GetList(CurrentUser.Id));
+            olvPasswords.SetObjects(new PasswordController(CurrentUser.Login).GetList(CurrentUser.Id));
         }
 
         /// <summary>
@@ -1020,7 +1020,6 @@ namespace PasswordKeeper
 
         private void olvPasswords_DoubleClick(object sender, EventArgs e)
         {
-            // Test 0000
         }
     }
 }

@@ -13,9 +13,6 @@ namespace PasswordKeeper
         private PaddedBufferedBlockCipher _cipher;
         private IBlockCipherPadding _padding;
 
-        private string Salt = "~.UB$9ckf#_}OXlC-}Vto6<Gs|'P_[";
-        private string Pepper = "c~xe*(;F%s?IUg['KBOR(/Hoyl15v6";
-
         public BCEngine(IBlockCipher blockCipher, Encoding encoding)
         {
             _blockCipher = blockCipher;
@@ -30,9 +27,6 @@ namespace PasswordKeeper
 
         public string Encrypt(string plain, string key)
         {
-            // Add salt and pepper
-
-
             byte[] result = BouncyCastleCrypto(true, _encoding.GetBytes(plain), key);
             return Convert.ToBase64String(result);
         }
@@ -40,8 +34,6 @@ namespace PasswordKeeper
         public string Decrypt(string cipher, string key)
         {
             byte[] result = BouncyCastleCrypto(false, Convert.FromBase64String(cipher), key);
-
-            // Remove salt and pepper
 
             return _encoding.GetString(result);
         }
@@ -66,7 +58,7 @@ namespace PasswordKeeper
 
                 return _cipher.DoFinal(input);
             }
-            catch (Org.BouncyCastle.Crypto.CryptoException ex)
+            catch (CryptoException ex)
             {
                 throw new CryptoException(ex.Message);
             }
