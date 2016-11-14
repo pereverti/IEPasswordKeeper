@@ -63,6 +63,11 @@ namespace PasswordKeeper
                 e.Cancel = true;
         }
 
+        private void btnShowPassword_Click(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = txtPassword.PasswordChar.Equals('\0') ? '●' : '\0';
+        }
+
         #endregion
 
         #region Methods
@@ -148,6 +153,5 @@ namespace PasswordKeeper
         }
 
         #endregion
-
     }
 }

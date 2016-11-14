@@ -41,36 +41,13 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnShowPassword = new System.Windows.Forms.Button();
             lblDisplayName = new System.Windows.Forms.Label();
             lblUserName = new System.Windows.Forms.Label();
             lblPassword = new System.Windows.Forms.Label();
             lblNotes = new System.Windows.Forms.Label();
             lblUrl = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(364, 316);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 12;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnOk
-            // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(283, 316);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 10;
-            this.btnOk.Text = "button2";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // lblDisplayName
             // 
@@ -117,6 +94,30 @@
             lblUrl.TabIndex = 7;
             lblUrl.Text = "URL";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(364, 316);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOk.Location = new System.Drawing.Point(283, 316);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 10;
+            this.btnOk.Text = "button2";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
             // txtDisplayName
             // 
             this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -133,6 +134,7 @@
             this.txtNotes.Location = new System.Drawing.Point(98, 122);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
+            this.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtNotes.Size = new System.Drawing.Size(341, 136);
             this.txtNotes.TabIndex = 8;
             // 
@@ -152,7 +154,7 @@
             this.txtPassword.Location = new System.Drawing.Point(98, 64);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
-            this.txtPassword.Size = new System.Drawing.Size(341, 23);
+            this.txtPassword.Size = new System.Drawing.Size(290, 23);
             this.txtPassword.TabIndex = 4;
             // 
             // txtUserName
@@ -177,6 +179,16 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnShowPassword
+            // 
+            this.btnShowPassword.Location = new System.Drawing.Point(394, 64);
+            this.btnShowPassword.Name = "btnShowPassword";
+            this.btnShowPassword.Size = new System.Drawing.Size(45, 23);
+            this.btnShowPassword.TabIndex = 5;
+            this.btnShowPassword.Text = "●●●";
+            this.btnShowPassword.UseVisualStyleBackColor = true;
+            this.btnShowPassword.Click += new System.EventHandler(this.btnShowPassword_Click);
+            // 
             // frmPasswordManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,6 +196,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(451, 351);
             this.ControlBox = false;
+            this.Controls.Add(this.btnShowPassword);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.txtPassword);
@@ -220,5 +233,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnShowPassword;
     }
 }

@@ -12,6 +12,7 @@ namespace PasswordKeeper
         public string DisplayName { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public string PasswordBullets { get { return "●●●●●●"; } }
         public string Key { get; set; }
         public string Url { get; set; }
         public string Notes { get; set; }
