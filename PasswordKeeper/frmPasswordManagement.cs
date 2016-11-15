@@ -9,11 +9,15 @@ namespace PasswordKeeper
         private readonly int UserId;
         private readonly string PasswordKey;
 
+        private Zxcvbn.Zxcvbn PasswordEvaluatorEngine;
+
         private PasswordModel Passwd { get; set; }
 
         public frmPasswordManagement(Tools.PasswordAction typeOfAction, int usrId, string key)
         {
             InitializeComponent();
+
+            PasswordEvaluatorEngine = new Zxcvbn.Zxcvbn();
 
             Mode = typeOfAction;
             UserId = usrId;
@@ -34,9 +38,12 @@ namespace PasswordKeeper
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            SavePassword();
+            if (CheckValidations())
+            {
+                SavePassword();
 
-            Close();
+                Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -66,6 +73,7 @@ namespace PasswordKeeper
         private void btnShowPassword_Click(object sender, EventArgs e)
         {
             txtPassword.PasswordChar = txtPassword.PasswordChar.Equals('\0') ? '●' : '\0';
+            txtPasswordConfirmation.PasswordChar = txtPassword.PasswordChar;
         }
 
         #endregion
@@ -77,6 +85,8 @@ namespace PasswordKeeper
         /// </summary>
         private void InitControls()
         {
+            lblPasswordStrength.Text = string.Empty;
+
             switch (Mode)
             {
                 case Tools.PasswordAction.Create:
@@ -93,6 +103,22 @@ namespace PasswordKeeper
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// Perform password validations
+        /// </summary>
+        /// <returns>true if valdations are ok, false otherwise</returns>
+        private bool CheckValidations()
+        {
+            if (!txtPassword.Text.Equals(txtPasswordConfirmation.Text))
+            {
+                MessageBox.Show("Passwords are different !", "Abort", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -125,6 +151,7 @@ namespace PasswordKeeper
             txtDisplayName.Text = Passwd.DisplayName;
             txtUserName.Text = Passwd.Login;
             txtPassword.Text = Passwd.Password;
+            txtPasswordConfirmation.Text = Passwd.Password;
             txtUrl.Text = Passwd.Url;
             txtNotes.Text = Passwd.Notes;
         }
@@ -153,5 +180,12 @@ namespace PasswordKeeper
         }
 
         #endregion
+
+        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Zxcvbn.Result passwordResult = PasswordEvaluatorEngine.EvaluatePassword(txtPassword.Text);
+
+            lblPasswordStrength.Text = string.Concat("Crack Time : ", passwordResult.CrackTimeDisplay, "\nEntropy : ", passwordResult.Entropy, " bits\nScore : ", passwordResult.Score);
+        }
     }
 }

@@ -30,7 +30,6 @@ namespace PasswordKeeper
         private Button btnLogout;
         private Label lblConnectedUserFriendlyName;
         private Label lblConnectedUser;
-        private ToolTip toolTipPassword;
         private TextBox txtConfirmPassword;
         private Label lblConfirmPassword;
         private Button btnSettings;
@@ -97,7 +96,6 @@ namespace PasswordKeeper
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnNewPassword = new System.Windows.Forms.Button();
-            this.toolTipPassword = new System.Windows.Forms.ToolTip(this.components);
             lblListPasswords = new System.Windows.Forms.Label();
             lblTitle = new System.Windows.Forms.Label();
             lblLogin = new System.Windows.Forms.Label();
@@ -175,7 +173,7 @@ namespace PasswordKeeper
             this.toolStripCopyPassword,
             this.copyURLToolStripMenuItem});
             this.ctxMenuCopy.Name = "ctxMenuCopy";
-            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 70);
+            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 92);
             this.ctxMenuCopy.Text = "Clipboard Copy";
             // 
             // toolStripCopyUser
@@ -226,6 +224,7 @@ namespace PasswordKeeper
             // 
             // btnShowPassword
             // 
+            this.btnShowPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnShowPassword.Location = new System.Drawing.Point(245, 36);
             this.btnShowPassword.Name = "btnShowPassword";
             this.btnShowPassword.Size = new System.Drawing.Size(45, 23);
@@ -489,15 +488,11 @@ namespace PasswordKeeper
             this.btnNewPassword.UseVisualStyleBackColor = true;
             this.btnNewPassword.Click += new System.EventHandler(this.btnNewPassword_Click);
             // 
-            // toolTipPassword
-            // 
-            this.toolTipPassword.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
             // MyIEAdvancedBar1
             // 
             this.Controls.Add(lblTitle);
-            this.Controls.Add(this.pnlPasswords);
             this.Controls.Add(this.pnlLogin);
+            this.Controls.Add(this.pnlPasswords);
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
