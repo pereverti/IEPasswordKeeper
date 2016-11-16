@@ -47,6 +47,8 @@ namespace PasswordKeeper
         private BrightIdeasSoftware.OLVColumn colPasswordUnreadable;
         private BrightIdeasSoftware.OLVColumn colUrl;
         private Button btnShowPassword;
+        private ToolTip ttAutoTypeTop;
+        private ToolTip ttAutoTypeBottom;
 
         #region Component Designer generated code
 
@@ -96,6 +98,8 @@ namespace PasswordKeeper
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnNewPassword = new System.Windows.Forms.Button();
+            this.ttAutoTypeTop = new System.Windows.Forms.ToolTip(this.components);
+            this.ttAutoTypeBottom = new System.Windows.Forms.ToolTip(this.components);
             lblListPasswords = new System.Windows.Forms.Label();
             lblTitle = new System.Windows.Forms.Label();
             lblLogin = new System.Windows.Forms.Label();
@@ -173,7 +177,7 @@ namespace PasswordKeeper
             this.toolStripCopyPassword,
             this.copyURLToolStripMenuItem});
             this.ctxMenuCopy.Name = "ctxMenuCopy";
-            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 92);
+            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 70);
             this.ctxMenuCopy.Text = "Clipboard Copy";
             // 
             // toolStripCopyUser
@@ -487,6 +491,14 @@ namespace PasswordKeeper
             this.btnNewPassword.Text = "New";
             this.btnNewPassword.UseVisualStyleBackColor = true;
             this.btnNewPassword.Click += new System.EventHandler(this.btnNewPassword_Click);
+            // 
+            // ttAutoTypeTop
+            // 
+            this.ttAutoTypeTop.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
+            // ttAutoTypeBottom
+            // 
+            this.ttAutoTypeBottom.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // MyIEAdvancedBar1
             // 
@@ -840,6 +852,9 @@ namespace PasswordKeeper
         {
             lblConnectedUser.Text = CurrentUser.Login;
             lblConnectedUserFriendlyName.Text = CurrentUser.DisplayName;
+
+            ttAutoTypeTop.SetToolTip(btnAutoTypeTop, "Auto complete fields");
+            ttAutoTypeBottom.SetToolTip(btnAutoTypeBottom, "Auto complete fields");
         }
 
         private void LoadPasswordsList()

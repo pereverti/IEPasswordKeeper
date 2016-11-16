@@ -242,4 +242,10 @@
         e5lIx8hAo2vk/QQ4HS0eZwQrvE1CCEX9BZwvHH3CTwOhAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="ttAutoTypeTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>150, 19</value>
+  </metadata>
+  <metadata name="ttAutoTypeBottom.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>269, 17</value>
+  </metadata>
 </root>

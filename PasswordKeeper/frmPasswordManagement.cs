@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace PasswordKeeper
@@ -76,6 +77,18 @@ namespace PasswordKeeper
             txtPasswordConfirmation.PasswordChar = txtPassword.PasswordChar;
         }
 
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtPassword.Text))
+            {
+                InitPasswordControls();
+
+                return;
+            }
+
+            SetPasswordSummary();
+        }
+
         #endregion
 
         #region Methods
@@ -85,7 +98,7 @@ namespace PasswordKeeper
         /// </summary>
         private void InitControls()
         {
-            lblPasswordStrength.Text = string.Empty;
+            InitPasswordControls();
 
             switch (Mode)
             {
@@ -101,8 +114,24 @@ namespace PasswordKeeper
 
                     MapObjectToFields();
 
+                    SetPasswordSummary();
+
                     break;
             }
+        }
+
+        /// <summary>
+        /// Initialize password summary controls
+        /// </summary>
+        private void InitPasswordControls()
+        {
+            cpbPasswordStrength.Value = 0;
+            cpbPasswordStrength.Text = string.Empty;
+
+            lblPasswordStrength.Text = string.Empty;
+            lblPasswordLengthValue.Text = string.Empty;
+            lblPasswordCrackTimeValue.Text = string.Empty;
+            lblPasswordEntropyValue.Text = string.Empty;
         }
 
         /// <summary>
@@ -179,13 +208,56 @@ namespace PasswordKeeper
             Passwd.Notes = txtNotes.Text.Trim();
         }
 
-        #endregion
-
-        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        /// <summary>
+        /// Show passwors summary elements according password
+        /// </summary>
+        private void SetPasswordSummary()
         {
             Zxcvbn.Result passwordResult = PasswordEvaluatorEngine.EvaluatePassword(txtPassword.Text);
 
-            lblPasswordStrength.Text = string.Concat("Crack Time : ", passwordResult.CrackTimeDisplay, "\nEntropy : ", passwordResult.Entropy, " bits\nScore : ", passwordResult.Score);
+            lblPasswordLengthValue.Text = string.Concat(txtPassword.Text.Length, " ch.");
+            lblPasswordCrackTimeValue.Text = passwordResult.CrackTimeDisplay;
+            lblPasswordEntropyValue.Text = string.Concat(Math.Round(passwordResult.Entropy), " bits");
+
+            cpbPasswordStrength.Value = passwordResult.Score + 1;
+            cpbPasswordStrength.Text = (passwordResult.Score + 1).ToString();
+
+            switch (passwordResult.Score)
+            {
+                case 0:
+                    lblPasswordStrength.Text = "Very weak";
+                    lblPasswordStrength.ForeColor = Color.Red;
+                    cpbPasswordStrength.ForeColor = Color.Red;
+                    cpbPasswordStrength.ProgressColor = Color.Red;
+                    break;
+                case 1:
+                    lblPasswordStrength.Text = "Weak";
+                    lblPasswordStrength.ForeColor = ControlPaint.Light(Color.Red);
+                    cpbPasswordStrength.ForeColor = ControlPaint.Light(Color.Red);
+                    cpbPasswordStrength.ProgressColor = ControlPaint.Light(Color.Red);
+                    break;
+                case 2:
+                    lblPasswordStrength.Text = "Medium";
+                    lblPasswordStrength.ForeColor = ControlPaint.Light(Color.Green);
+                    cpbPasswordStrength.ForeColor = ControlPaint.Light(Color.Green);
+                    cpbPasswordStrength.ProgressColor = ControlPaint.Light(Color.Green);
+                    break;
+                case 3:
+                    lblPasswordStrength.Text = "Good";
+                    lblPasswordStrength.ForeColor = Color.Green;
+                    cpbPasswordStrength.ForeColor = Color.Green;
+                    cpbPasswordStrength.ProgressColor = Color.Green;
+                    break;
+                case 4:
+                    lblPasswordStrength.Text = "Strong";
+                    lblPasswordStrength.ForeColor = Color.DarkGreen;
+                    cpbPasswordStrength.ForeColor = Color.DarkGreen;
+                    cpbPasswordStrength.ProgressColor = Color.DarkGreen;
+                    break;
+            }
         }
+
+        #endregion
+
     }
 }
