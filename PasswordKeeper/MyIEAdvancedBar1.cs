@@ -49,6 +49,8 @@ namespace PasswordKeeper
         private Button btnShowPassword;
         private ToolTip ttAutoTypeTop;
         private ToolTip ttAutoTypeBottom;
+        private ToolStripMenuItem toolStripEditPassword;
+        private ToolTip ttAddEntry;
 
         #region Component Designer generated code
 
@@ -68,6 +70,7 @@ namespace PasswordKeeper
             System.Windows.Forms.Label lblTitle;
             System.Windows.Forms.Label lblLogin;
             System.Windows.Forms.Label lblPassword;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyIEAdvancedBar1));
             this.lblConnectedUserFriendlyName = new System.Windows.Forms.Label();
             this.lblConnectedUser = new System.Windows.Forms.Label();
@@ -75,6 +78,7 @@ namespace PasswordKeeper
             this.toolStripCopyUser = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripCopyPassword = new System.Windows.Forms.ToolStripMenuItem();
             this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripEditPassword = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlLogin = new System.Windows.Forms.Panel();
             this.btnShowPassword = new System.Windows.Forms.Button();
             this.btnDeleteUser = new System.Windows.Forms.Button();
@@ -100,10 +104,12 @@ namespace PasswordKeeper
             this.btnNewPassword = new System.Windows.Forms.Button();
             this.ttAutoTypeTop = new System.Windows.Forms.ToolTip(this.components);
             this.ttAutoTypeBottom = new System.Windows.Forms.ToolTip(this.components);
+            this.ttAddEntry = new System.Windows.Forms.ToolTip(this.components);
             lblListPasswords = new System.Windows.Forms.Label();
             lblTitle = new System.Windows.Forms.Label();
             lblLogin = new System.Windows.Forms.Label();
             lblPassword = new System.Windows.Forms.Label();
+            toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.ctxMenuCopy.SuspendLayout();
             this.pnlLogin.SuspendLayout();
             this.pnlPasswords.SuspendLayout();
@@ -150,6 +156,11 @@ namespace PasswordKeeper
             lblPassword.TabIndex = 2;
             lblPassword.Text = "Password";
             // 
+            // toolStripSeparator
+            // 
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new System.Drawing.Size(152, 6);
+            // 
             // lblConnectedUserFriendlyName
             // 
             this.lblConnectedUserFriendlyName.AutoSize = true;
@@ -175,9 +186,11 @@ namespace PasswordKeeper
             this.ctxMenuCopy.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripCopyUser,
             this.toolStripCopyPassword,
-            this.copyURLToolStripMenuItem});
+            this.copyURLToolStripMenuItem,
+            toolStripSeparator,
+            this.toolStripEditPassword});
             this.ctxMenuCopy.Name = "ctxMenuCopy";
-            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 70);
+            this.ctxMenuCopy.Size = new System.Drawing.Size(156, 98);
             this.ctxMenuCopy.Text = "Clipboard Copy";
             // 
             // toolStripCopyUser
@@ -203,6 +216,14 @@ namespace PasswordKeeper
             this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            // 
+            // toolStripEditPassword
+            // 
+            this.toolStripEditPassword.Image = ((System.Drawing.Image)(resources.GetObject("toolStripEditPassword.Image")));
+            this.toolStripEditPassword.Name = "toolStripEditPassword";
+            this.toolStripEditPassword.Size = new System.Drawing.Size(155, 22);
+            this.toolStripEditPassword.Text = "Edit Entry";
+            this.toolStripEditPassword.Click += new System.EventHandler(this.toolStripEditPassword_Click);
             // 
             // pnlLogin
             // 
@@ -341,6 +362,7 @@ namespace PasswordKeeper
             this.txtPassword.PasswordChar = '●';
             this.txtPassword.Size = new System.Drawing.Size(126, 23);
             this.txtPassword.TabIndex = 3;
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
             // 
             // txtLogin
             // 
@@ -395,7 +417,7 @@ namespace PasswordKeeper
             this.olvPasswords.Name = "olvPasswords";
             this.olvPasswords.SelectAllOnControlA = false;
             this.olvPasswords.ShowGroups = false;
-            this.olvPasswords.Size = new System.Drawing.Size(296, 461);
+            this.olvPasswords.Size = new System.Drawing.Size(296, 485);
             this.olvPasswords.TabIndex = 28;
             this.olvPasswords.UseAlternatingBackColors = true;
             this.olvPasswords.UseCompatibleStateImageBehavior = false;
@@ -482,13 +504,13 @@ namespace PasswordKeeper
             // 
             // btnNewPassword
             // 
-            this.btnNewPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnNewPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNewPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewPassword.Location = new System.Drawing.Point(4, 591);
+            this.btnNewPassword.Image = ((System.Drawing.Image)(resources.GetObject("btnNewPassword.Image")));
+            this.btnNewPassword.Location = new System.Drawing.Point(248, 71);
             this.btnNewPassword.Name = "btnNewPassword";
-            this.btnNewPassword.Size = new System.Drawing.Size(75, 23);
+            this.btnNewPassword.Size = new System.Drawing.Size(23, 23);
             this.btnNewPassword.TabIndex = 24;
-            this.btnNewPassword.Text = "New";
             this.btnNewPassword.UseVisualStyleBackColor = true;
             this.btnNewPassword.Click += new System.EventHandler(this.btnNewPassword_Click);
             // 
@@ -500,11 +522,15 @@ namespace PasswordKeeper
             // 
             this.ttAutoTypeBottom.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // ttAddEntry
+            // 
+            this.ttAddEntry.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
             // MyIEAdvancedBar1
             // 
             this.Controls.Add(lblTitle);
-            this.Controls.Add(this.pnlLogin);
             this.Controls.Add(this.pnlPasswords);
+            this.Controls.Add(this.pnlLogin);
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
@@ -591,16 +617,23 @@ namespace PasswordKeeper
         /// </summary>
         private void lnkRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (lnkRegister.Text.Equals(Tools.LblLinkButtonRegister))
+            if (lnkRegister.Text.Equals(Tools.LblLinkButtonRegister)) // Registration
+            {
                 ToggleLoginPanelControls(TypeLogin.Register);
-            else if (lnkRegister.Text.Equals(Tools.LblLinkButtonCancel))
+            }
+            else if (lnkRegister.Text.Equals(Tools.LblLinkButtonCancel)) // Cancel registration
+            {
                 ToggleLoginPanelControls(TypeLogin.Connect);
+
+                // Clean textboxes
+                Clean();
+            }
         }
 
         /// <summary>
-        /// CLick event of the button connection
+        /// Click event of the button connection
         /// </summary>
-        /// <remarks>This button is also used to save a new user (registration mode)</remarks>
+        /// <remarks>This button is also used to save a new user (registration mode) or update an existing user (edition mode once connected)</remarks>
         private void btnConnect_Click(object sender, EventArgs e)
         {
             switch (btnLoginAction.Text)
@@ -718,6 +751,11 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Url);
         }
 
+        private void toolStripEditPassword_Click(object sender, EventArgs e)
+        {
+            ShowPasswordForm((PasswordModel)olvPasswords.FocusedObject);
+        }
+
         /// <summary>
         /// Click on auto-type buttons
         /// </summary>
@@ -768,21 +806,9 @@ namespace PasswordKeeper
         {
             // Copy to clipboard double-clicked cell or edit password if the first column is clicked
             if (FirstColumnSelected)
-            {
-                DialogResult result = DialogResult.Cancel;
-
-                using (frmPasswordManagement updatedPassword = new frmPasswordManagement(Tools.PasswordAction.Edit, CurrentUser.Id, CurrentUser.Login, (PasswordModel)((FastDataListView)sender).FocusedObject))
-                {
-                    result = updatedPassword.ShowDialog();
-                }
-
-                if (result == DialogResult.OK)
-                    LoadPasswordsList();
-            }
+                ShowPasswordForm((PasswordModel)((FastDataListView)sender).FocusedObject);
             else
-            {
                 Clipboard.SetText(SelectedPasswordListCellText);
-            }
         }
 
         /// <summary>
@@ -815,6 +841,17 @@ namespace PasswordKeeper
                 return;
 
             ctxMenuCopy.Show(Cursor.Position.X, Cursor.Position.Y);
+        }
+
+        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Nothing will be happen if the form is not in connection mode
+            if (!btnLoginAction.Text.Equals(Tools.lblButtonConnect))
+                return;
+
+            // Enter key is pressed
+            if (e.KeyChar.Equals('\r'))
+                btnConnect_Click(sender, null);
         }
 
         #endregion
@@ -855,6 +892,7 @@ namespace PasswordKeeper
 
             ttAutoTypeTop.SetToolTip(btnAutoTypeTop, "Auto complete fields");
             ttAutoTypeBottom.SetToolTip(btnAutoTypeBottom, "Auto complete fields");
+            ttAddEntry.SetToolTip(btnNewPassword, "Add entry");
         }
 
         private void LoadPasswordsList()
@@ -1036,7 +1074,6 @@ namespace PasswordKeeper
             return true;
         }
 
-
         /// <summary>
         /// Update current user
         /// </summary>
@@ -1055,6 +1092,23 @@ namespace PasswordKeeper
             MessageBox.Show(string.Concat(CurrentUser.DisplayName, " sucessfully updated."), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             return true;
+        }
+
+        /// <summary>
+        /// Call the new/update password form
+        /// </summary>
+        /// <param name="password">Password object</param>
+        private void ShowPasswordForm(PasswordModel password)
+        {
+            DialogResult result = DialogResult.Cancel;
+
+            using (frmPasswordManagement updatedPassword = new frmPasswordManagement(Tools.PasswordAction.Edit, CurrentUser.Id, CurrentUser.Login, password))
+            {
+                result = updatedPassword.ShowDialog();
+            }
+
+            if (result == DialogResult.OK)
+                LoadPasswordsList();
         }
 
         #endregion
