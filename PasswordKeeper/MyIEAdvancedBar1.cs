@@ -432,13 +432,14 @@ namespace PasswordKeeper
             this.colDisplayName.AspectName = "DisplayName";
             this.colDisplayName.IsEditable = false;
             this.colDisplayName.Text = "Title";
-            this.colDisplayName.Width = 100;
+            this.colDisplayName.Width = 90;
             // 
             // colUserName
             // 
             this.colUserName.AspectName = "Login";
             this.colUserName.IsEditable = false;
             this.colUserName.Text = "User Name";
+            this.colUserName.Width = 90;
             // 
             // colPasswordUnreadable
             // 
@@ -447,12 +448,14 @@ namespace PasswordKeeper
             this.colPasswordUnreadable.IsEditable = false;
             this.colPasswordUnreadable.Sortable = false;
             this.colPasswordUnreadable.Text = "Password";
+            this.colPasswordUnreadable.Width = 70;
             // 
             // colUrl
             // 
             this.colUrl.AspectName = "Url";
             this.colUrl.IsEditable = false;
             this.colUrl.Text = "Url";
+            this.colUrl.Width = 150;
             // 
             // btnAutoTypeBottom
             // 
@@ -605,8 +608,17 @@ namespace PasswordKeeper
             Passwords
         }
 
-        private string SelectedPasswordListCellText;
-        private bool FirstColumnSelected;
+        private enum TypeOfElement
+        {
+            Login,
+            Password,
+            Title,
+            URL,
+            Unknow
+        }
+
+        private string SelectedItemCellText;
+        private TypeOfElement SelectedElement;
 
         #endregion
 
@@ -728,29 +740,38 @@ namespace PasswordKeeper
         }
 
         /// <summary>
-        /// Copy selected entry login in the clipboard
+        /// Copy selected entry login in clipboard
         /// </summary>
         private void toolStripCopyUser_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Login);
+
+            WriteIeStatusBar("User copied in clipboard");
         }
 
         /// <summary>
-        /// Copy selected entry password in the clipboard
+        /// Copy selected entry password in clipboard
         /// </summary>
         private void toolStripCopyPassword_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Password);
+
+            WriteIeStatusBar("Password copied in clipboard");
         }
 
         /// <summary>
-        /// Copy selected entry url in the clipboard
+        /// Copy selected entry url in clipboard
         /// </summary>
         private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Url);
+
+            WriteIeStatusBar("URL copied in clipboard");
         }
 
+        /// <summary>
+        /// Edit the selected entry
+        /// </summary>
         private void toolStripEditPassword_Click(object sender, EventArgs e)
         {
             ShowPasswordForm((PasswordModel)olvPasswords.FocusedObject);
@@ -768,7 +789,6 @@ namespace PasswordKeeper
                 input.disabled = true;
                 input.click();
             }
-
 
             if (olvPasswords.FocusedItem == null)
                 return;
@@ -804,15 +824,46 @@ namespace PasswordKeeper
         /// </summary>
         private void olvPasswords_DoubleClick(object sender, EventArgs e)
         {
-            // Copy to clipboard double-clicked cell or edit password if the first column is clicked
-            if (FirstColumnSelected)
-                ShowPasswordForm((PasswordModel)((FastDataListView)sender).FocusedObject);
-            else
-                Clipboard.SetText(SelectedPasswordListCellText);
+            const string statusEnd = "copied in clipboard";
+            
+            switch (SelectedElement)
+            {
+                case TypeOfElement.Login:
+                    WriteIeStatusBar(string.Concat("Login ", statusEnd));
+
+                    // Copy in clipboard
+                    Clipboard.SetText(SelectedItemCellText);
+
+                    break;
+                case TypeOfElement.Password:
+                    WriteIeStatusBar(string.Concat("Password ", statusEnd));
+
+                    // Copy in clipboard
+                    Clipboard.SetText(SelectedItemCellText);
+
+                    break;
+                case TypeOfElement.Title:
+                    // Edit current entry
+                    ShowPasswordForm((PasswordModel)((FastDataListView)sender).FocusedObject);
+
+                    break;
+                case TypeOfElement.URL:
+                    // Open URL in new tab
+                    OpenUrlInNewTab(((PasswordModel)((FastDataListView)sender).FocusedObject).Url);
+
+                    break;
+                case TypeOfElement.Unknow:
+                    WriteIeStatusBar(string.Concat("Element ", statusEnd));
+
+                    // Copy in clipboard
+                    Clipboard.SetText(SelectedItemCellText);
+
+                    break;
+            }
         }
 
         /// <summary>
-        /// Passwords list cell click, get the value of the cell
+        /// Passwords list cell click, get the value and/or the kind of the cell
         /// </summary>
         private void olvPasswords_CellClick(object sender, CellClickEventArgs e)
         {
@@ -820,18 +871,34 @@ namespace PasswordKeeper
                 return;
 
             // Save the value of the clicked cell
-            if (e.Column.Index == 0) // Title column
+            switch (e.Column.Index)
             {
-                FirstColumnSelected = true;
-            }
-            else if (e.Column.Index == 2) // Password column
-            {
-                SelectedPasswordListCellText = ((PasswordModel)e.ListView.FocusedObject).Password;
-            }
-            else // Other columns, to be copied as it
-            {
-                FirstColumnSelected = false;
-                SelectedPasswordListCellText = e.SubItem.Text;
+                case 0: // Title column
+                    SelectedElement = TypeOfElement.Title;
+
+                    break;
+                case 1: // Login column
+                    SelectedElement = TypeOfElement.Login;
+                    SelectedItemCellText = e.SubItem.Text;
+
+                    break;
+                case 2: // Password column
+                    SelectedElement = TypeOfElement.Password;
+
+                    // Get the real password bacause e.SubItem.Text shows the unreadable password (bullets)
+                    SelectedItemCellText = ((PasswordModel)e.ListView.FocusedObject).Password;
+
+                    break;
+                case 3:
+                    SelectedElement = TypeOfElement.URL;
+
+                    break;
+                default: // Other columns, to be copied as it
+                    SelectedElement = TypeOfElement.Unknow;
+
+                    SelectedItemCellText = e.SubItem.Text;
+
+                    break;
             }
         }
 
@@ -1109,6 +1176,28 @@ namespace PasswordKeeper
 
             if (result == DialogResult.OK)
                 LoadPasswordsList();
+        }
+
+        /// <summary>
+        /// Open an URL in a new IE tab
+        /// </summary>
+        /// <param name="url">URL to open</param>
+        private void OpenUrlInNewTab(string url)
+        {
+            object flag = 0x0800;
+            object targetFrameName = "_self";
+
+            IEApp.Navigate(url, ref flag, ref targetFrameName);
+        }
+
+        /// <summary>
+        /// Show the IE status bar and write some text
+        /// </summary>
+        /// <param name="status">Text to write</param>
+        private void WriteIeStatusBar(string status)
+        {
+            IEApp.StatusBar = true;
+            IEApp.StatusText = status;
         }
 
         #endregion
