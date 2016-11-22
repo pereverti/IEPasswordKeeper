@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <assemblyIdentity name="PasswordKeeper" imageRuntimeVersion="v4.0.30319" />
-  <loaderSettings generateLogFile="true" shadowCopyEnabled="false" privileges="administrator" configFileName="PasswordKeeper.dll.config" />
+  <loaderSettings generateLogFile="true" shadowCopyEnabled="false" privileges="administrator" configFileName="PasswordKeeper.dll.config" handleDocumentUICommands="true" />
 </configuration>

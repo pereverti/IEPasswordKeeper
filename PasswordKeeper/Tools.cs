@@ -1,7 +1,9 @@
 ﻿using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Paddings;
 using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -14,6 +16,21 @@ namespace PasswordKeeper
             Create,
             Edit
         }
+
+        internal static MyIEAdvancedBar1 CurrentModule { get; set; }
+
+        private static readonly Collection<string> LoginControlNames = new Collection<string>()
+        {
+            "login",
+            "mail",
+            "name"
+        };
+
+        private static readonly Collection<string> PasswordControlNames = new Collection<string>()
+        {
+            "password",
+            "pass"
+        };
 
         internal const string LblButtonRegister = "Register";
         internal const string lblButtonConnect = "Connect";
@@ -90,6 +107,16 @@ namespace PasswordKeeper
             BCEngine bcEngine = new BCEngine(new AesEngine(), Encoding.UTF8);
             bcEngine.SetPadding(padding);
             return bcEngine.Decrypt(cipher, key);
+        }
+
+        internal static bool IsLogin(string id)
+        {
+            return LoginControlNames.Any(lcn => id.ToLower().Contains(lcn));
+        }
+
+        internal static bool IsPassword(string id)
+        {
+            return PasswordControlNames.Any(pcn => id.ToLower().Contains(pcn));
         }
     }
 }

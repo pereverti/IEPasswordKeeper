@@ -41,7 +41,7 @@ namespace PasswordKeeper
         private ToolStripMenuItem toolStripCopyUser;
         private ToolStripMenuItem toolStripCopyPassword;
         private ToolStripMenuItem copyURLToolStripMenuItem;
-        private BrightIdeasSoftware.FastDataListView olvPasswords;
+        internal FastDataListView olvPasswords;
         private BrightIdeasSoftware.OLVColumn colDisplayName;
         private BrightIdeasSoftware.OLVColumn colUserName;
         private BrightIdeasSoftware.OLVColumn colPasswordUnreadable;
@@ -51,6 +51,7 @@ namespace PasswordKeeper
         private ToolTip ttAutoTypeBottom;
         private ToolStripMenuItem toolStripEditPassword;
         private ToolTip ttAddEntry;
+        private Label lblSelectedEntry;
 
         #region Component Designer generated code
 
@@ -92,6 +93,7 @@ namespace PasswordKeeper
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.pnlPasswords = new System.Windows.Forms.Panel();
+            this.lblSelectedEntry = new System.Windows.Forms.Label();
             this.olvPasswords = new BrightIdeasSoftware.FastDataListView();
             this.colDisplayName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colUserName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -120,7 +122,7 @@ namespace PasswordKeeper
             // 
             lblListPasswords.AutoSize = true;
             lblListPasswords.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblListPasswords.Location = new System.Drawing.Point(4, 79);
+            lblListPasswords.Location = new System.Drawing.Point(4, 116);
             lblListPasswords.Name = "lblListPasswords";
             lblListPasswords.Size = new System.Drawing.Size(83, 15);
             lblListPasswords.TabIndex = 14;
@@ -164,10 +166,10 @@ namespace PasswordKeeper
             // lblConnectedUserFriendlyName
             // 
             this.lblConnectedUserFriendlyName.AutoSize = true;
-            this.lblConnectedUserFriendlyName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConnectedUserFriendlyName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConnectedUserFriendlyName.Location = new System.Drawing.Point(3, 15);
             this.lblConnectedUserFriendlyName.Name = "lblConnectedUserFriendlyName";
-            this.lblConnectedUserFriendlyName.Size = new System.Drawing.Size(148, 21);
+            this.lblConnectedUserFriendlyName.Size = new System.Drawing.Size(160, 21);
             this.lblConnectedUserFriendlyName.TabIndex = 15;
             this.lblConnectedUserFriendlyName.Text = "User Friendly Name";
             // 
@@ -378,6 +380,7 @@ namespace PasswordKeeper
             this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPasswords.Controls.Add(this.lblSelectedEntry);
             this.pnlPasswords.Controls.Add(this.olvPasswords);
             this.pnlPasswords.Controls.Add(this.btnAutoTypeBottom);
             this.pnlPasswords.Controls.Add(this.btnAutoTypeTop);
@@ -392,6 +395,16 @@ namespace PasswordKeeper
             this.pnlPasswords.Size = new System.Drawing.Size(303, 617);
             this.pnlPasswords.TabIndex = 18;
             this.pnlPasswords.Visible = false;
+            // 
+            // lblSelectedEntry
+            // 
+            this.lblSelectedEntry.AutoSize = true;
+            this.lblSelectedEntry.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectedEntry.Location = new System.Drawing.Point(3, 76);
+            this.lblSelectedEntry.Name = "lblSelectedEntry";
+            this.lblSelectedEntry.Size = new System.Drawing.Size(193, 21);
+            this.lblSelectedEntry.TabIndex = 29;
+            this.lblSelectedEntry.Text = "Password Display Name";
             // 
             // olvPasswords
             // 
@@ -412,12 +425,12 @@ namespace PasswordKeeper
             this.olvPasswords.DataSource = null;
             this.olvPasswords.FullRowSelect = true;
             this.olvPasswords.GridLines = true;
-            this.olvPasswords.Location = new System.Drawing.Point(4, 100);
+            this.olvPasswords.Location = new System.Drawing.Point(4, 134);
             this.olvPasswords.MultiSelect = false;
             this.olvPasswords.Name = "olvPasswords";
             this.olvPasswords.SelectAllOnControlA = false;
             this.olvPasswords.ShowGroups = false;
-            this.olvPasswords.Size = new System.Drawing.Size(296, 485);
+            this.olvPasswords.Size = new System.Drawing.Size(296, 451);
             this.olvPasswords.TabIndex = 28;
             this.olvPasswords.UseAlternatingBackColors = true;
             this.olvPasswords.UseCompatibleStateImageBehavior = false;
@@ -474,7 +487,7 @@ namespace PasswordKeeper
             this.btnAutoTypeTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAutoTypeTop.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAutoTypeTop.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoTypeTop.Image")));
-            this.btnAutoTypeTop.Location = new System.Drawing.Point(277, 71);
+            this.btnAutoTypeTop.Location = new System.Drawing.Point(277, 108);
             this.btnAutoTypeTop.Name = "btnAutoTypeTop";
             this.btnAutoTypeTop.Size = new System.Drawing.Size(23, 23);
             this.btnAutoTypeTop.TabIndex = 26;
@@ -510,7 +523,7 @@ namespace PasswordKeeper
             this.btnNewPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNewPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewPassword.Image = ((System.Drawing.Image)(resources.GetObject("btnNewPassword.Image")));
-            this.btnNewPassword.Location = new System.Drawing.Point(248, 71);
+            this.btnNewPassword.Location = new System.Drawing.Point(248, 108);
             this.btnNewPassword.Name = "btnNewPassword";
             this.btnNewPassword.Size = new System.Drawing.Size(23, 23);
             this.btnNewPassword.TabIndex = 24;
@@ -537,6 +550,7 @@ namespace PasswordKeeper
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
+            this.Load += new System.EventHandler(this.MyIEAdvancedBar1_Load);
             this.ctxMenuCopy.ResumeLayout(false);
             this.pnlLogin.ResumeLayout(false);
             this.pnlLogin.PerformLayout();
@@ -579,12 +593,14 @@ namespace PasswordKeeper
             }
         }
 
+        // :radioactive: TEST SHARING DATA BETWEEN TABS
         public string OptionLogin
         {
             get { return txtLogin.Text; }
             set { txtLogin.Text = value; }
         }
 
+        // :radioactive: TEST SHARING DATA BETWEEN TABS
         public string OptionPassword
         {
             get { return txtPassword.Text; }
@@ -623,6 +639,14 @@ namespace PasswordKeeper
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// Start event
+        /// </summary>
+        private void MyIEAdvancedBar1_Load(object sender, EventArgs e)
+        {
+            Tools.CurrentModule = this;
+        }
 
         /// <summary>
         /// Click on the register link
@@ -699,6 +723,7 @@ namespace PasswordKeeper
         private void btnLogout_Click(object sender, EventArgs e)
         {
             Clean();
+            ClearSelectedPassword();
 
             TogglePanelsLoginPasswords(TypePanel.Login);
             ToggleLoginPanelControls(TypeLogin.Connect);
@@ -782,32 +807,45 @@ namespace PasswordKeeper
         /// </summary>
         private void btnAutoType_Click(object sender, EventArgs e)
         {
-            mshtml.IHTMLElement elem = HTMLDocument.getElementById("Name");
-            if (elem is mshtml.HTMLInputElement)
-            {
-                mshtml.HTMLInputElement input = elem as mshtml.HTMLInputElement;
-                input.disabled = true;
-                input.click();
-            }
-
             if (olvPasswords.FocusedItem == null)
                 return;
 
+            //mshtml.IHTMLElement elem = HTMLDocument.getElementById("Name");
+
+            //if (elem is mshtml.HTMLInputElement)
+            //{
+            //    mshtml.HTMLInputElement input = elem as mshtml.HTMLInputElement;
+            //    input.disabled = true;
+            //    input.click();
+            //}
+
             PasswordModel currentPassword = ((PasswordModel)olvPasswords.FocusedObject);
+            bool loginFilled = false;
+            bool passwordfilled = false;
 
             mshtml.IHTMLElementCollection inputCollection = HTMLDocument.getElementsByTagName("input");
 
             foreach (mshtml.IHTMLElement element in inputCollection)
             {
-                if (element.id != null)
+                if (passwordfilled && loginFilled)
+                    break;
+
+                // Only read existing and visible elements
+                if (element.id != null && !element.getAttribute("type").ToString().Equals("hidden"))
                 {
-                    if (element.id.ToLower().Contains("login"))
+                    if (!loginFilled && Tools.IsLogin(element.id))
                     {
+                        element.setAttribute("style", "background-color:Lime !important");
                         element.setAttribute("value", currentPassword.Login);
+
+                        //loginFilled = true;
                     }
-                    else if (element.id.ToLower().Contains("pass"))
+                    else if (!passwordfilled && Tools.IsPassword(element.id))
                     {
+                        element.setAttribute("style", "background-color:Lime !important");
                         element.setAttribute("value", currentPassword.Password);
+
+                        //passwordfilled = true;
                     }
                 }
             }
@@ -825,7 +863,7 @@ namespace PasswordKeeper
         private void olvPasswords_DoubleClick(object sender, EventArgs e)
         {
             const string statusEnd = "copied in clipboard";
-            
+
             switch (SelectedElement)
             {
                 case TypeOfElement.Login:
@@ -870,6 +908,9 @@ namespace PasswordKeeper
             if (e.RowIndex <= -1)
                 return;
 
+            // Set selected entry label and variables
+            SetSelectedPassword(((PasswordModel)e.ListView.FocusedObject).DisplayName);
+
             // Save the value of the clicked cell
             switch (e.Column.Index)
             {
@@ -906,6 +947,8 @@ namespace PasswordKeeper
         {
             if (e.RowIndex == -1)
                 return;
+
+            SetSelectedPassword(((PasswordModel)olvPasswords.FocusedObject).DisplayName);
 
             ctxMenuCopy.Show(Cursor.Position.X, Cursor.Position.Y);
         }
@@ -956,6 +999,8 @@ namespace PasswordKeeper
         {
             lblConnectedUser.Text = CurrentUser.Login;
             lblConnectedUserFriendlyName.Text = CurrentUser.DisplayName;
+
+            ClearSelectedPassword();
 
             ttAutoTypeTop.SetToolTip(btnAutoTypeTop, "Auto complete fields");
             ttAutoTypeBottom.SetToolTip(btnAutoTypeBottom, "Auto complete fields");
@@ -1200,7 +1245,27 @@ namespace PasswordKeeper
             IEApp.StatusText = status;
         }
 
-        #endregion
+        /// <summary>
+        /// Clear selected password label and variables
+        /// </summary>
+        private void ClearSelectedPassword()
+        {
+            lblSelectedEntry.Text = string.Empty;
 
+            // Clear variables
+        }
+
+        /// <summary>
+        /// Set selected password label and variables
+        /// </summary>
+        /// <param name="currentPasswordDisplayName">Password display name</param>
+        private void SetSelectedPassword(string currentPasswordDisplayName)
+        {
+            lblSelectedEntry.Text = string.Concat("Selected Entry : ", currentPasswordDisplayName);
+
+            // Set variables
+        }
+
+        #endregion
     }
 }
