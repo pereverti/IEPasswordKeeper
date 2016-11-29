@@ -14,6 +14,12 @@ namespace PasswordKeeper
     
     public partial class Password
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Password()
+        {
+            this.CustomFields = new HashSet<CustomField>();
+        }
+    
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password1 { get; set; }
@@ -25,5 +31,7 @@ namespace PasswordKeeper
         public System.DateTime CreationDate { get; set; }
     
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 }

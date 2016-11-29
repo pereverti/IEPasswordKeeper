@@ -17,7 +17,13 @@ namespace PasswordKeeper
             Edit
         }
 
-        internal static MyIEAdvancedBar1 CurrentModule { get; set; }
+        internal enum TypeField
+        {
+            Login = 1,
+            Password = 2
+        }
+
+        internal static int? IdCurrentPassword { get; set; }
 
         private static readonly Collection<string> LoginControlNames = new Collection<string>()
         {

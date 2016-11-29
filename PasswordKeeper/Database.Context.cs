@@ -27,5 +27,6 @@ namespace PasswordKeeper
     
         public virtual DbSet<Password> Passwords { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<CustomField> CustomFields { get; set; }
     }
 }

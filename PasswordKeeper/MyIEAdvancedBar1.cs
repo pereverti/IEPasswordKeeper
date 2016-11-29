@@ -5,6 +5,7 @@ using IE = Interop.SHDocVw;
 using AddinExpress.IE;
 using System.Collections.Generic;
 using BrightIdeasSoftware;
+using System.Linq;
 
 namespace PasswordKeeper
 {
@@ -130,7 +131,7 @@ namespace PasswordKeeper
             // 
             // lblTitle
             // 
-            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             lblTitle.AutoSize = true;
             lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -229,7 +230,7 @@ namespace PasswordKeeper
             // 
             // pnlLogin
             // 
-            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlLogin.Controls.Add(this.btnShowPassword);
             this.pnlLogin.Controls.Add(this.btnDeleteUser);
@@ -288,7 +289,7 @@ namespace PasswordKeeper
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(113, 65);
@@ -323,7 +324,7 @@ namespace PasswordKeeper
             // 
             // txtDisplayName
             // 
-            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(113, 94);
             this.txtDisplayName.Name = "txtDisplayName";
@@ -355,7 +356,7 @@ namespace PasswordKeeper
             // 
             // txtPassword
             // 
-            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(113, 36);
@@ -368,7 +369,7 @@ namespace PasswordKeeper
             // 
             // txtLogin
             // 
-            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLogin.Location = new System.Drawing.Point(113, 7);
             this.txtLogin.Name = "txtLogin";
@@ -377,8 +378,8 @@ namespace PasswordKeeper
             // 
             // pnlPasswords
             // 
-            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPasswords.Controls.Add(this.lblSelectedEntry);
             this.pnlPasswords.Controls.Add(this.olvPasswords);
@@ -412,8 +413,8 @@ namespace PasswordKeeper
             this.olvPasswords.AllColumns.Add(this.colUserName);
             this.olvPasswords.AllColumns.Add(this.colPasswordUnreadable);
             this.olvPasswords.AllColumns.Add(this.colUrl);
-            this.olvPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.olvPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.olvPasswords.CellEditUseWholeCell = false;
             this.olvPasswords.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -550,7 +551,6 @@ namespace PasswordKeeper
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
-            this.Load += new System.EventHandler(this.MyIEAdvancedBar1_Load);
             this.ctxMenuCopy.ResumeLayout(false);
             this.pnlLogin.ResumeLayout(false);
             this.pnlLogin.PerformLayout();
@@ -639,14 +639,6 @@ namespace PasswordKeeper
         #endregion
 
         #region Events
-
-        /// <summary>
-        /// Start event
-        /// </summary>
-        private void MyIEAdvancedBar1_Load(object sender, EventArgs e)
-        {
-            Tools.CurrentModule = this;
-        }
 
         /// <summary>
         /// Click on the register link
@@ -820,13 +812,53 @@ namespace PasswordKeeper
             //}
 
             PasswordModel currentPassword = ((PasswordModel)olvPasswords.FocusedObject);
+            List<CustomFieldModel> customFilelds = new CustomFieldController().GetCustomFields(currentPassword.Id);
             bool loginFilled = false;
             bool passwordfilled = false;
+            string customLogin = customFilelds.Count > 0
+                ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Login) != null
+                    ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Login).WebControlId
+                    : string.Empty
+                : string.Empty;
+            string customPassword = customFilelds.Count > 0
+                ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Password) != null
+                    ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Password).WebControlId
+                    : string.Empty
+                : string.Empty;
 
             mshtml.IHTMLElementCollection inputCollection = HTMLDocument.getElementsByTagName("input");
 
+            // First Pass : custom fields
             foreach (mshtml.IHTMLElement element in inputCollection)
             {
+                // Exit if login and password are already filled
+                if (passwordfilled && loginFilled)
+                    break;
+
+                // Only read existing and visible elements
+                if (element.id != null && !element.getAttribute("type").ToString().Equals("hidden"))
+                {
+                    if (!loginFilled && element.id.Equals(customLogin))
+                    {
+                        element.setAttribute("style", "background-color:Lime !important");
+                        element.setAttribute("value", currentPassword.Login);
+
+                        loginFilled = true;
+                    }
+                    else if (!passwordfilled && element.id.Equals(customPassword))
+                    {
+                        element.setAttribute("style", "background-color:Lime !important");
+                        element.setAttribute("value", currentPassword.Password);
+
+                        passwordfilled = true;
+                    }
+                }
+            }
+
+            // Second pass : generic dictionary
+            foreach (mshtml.IHTMLElement element in inputCollection)
+            {
+                // Exit if login and password are already filled
                 if (passwordfilled && loginFilled)
                     break;
 
@@ -838,14 +870,14 @@ namespace PasswordKeeper
                         element.setAttribute("style", "background-color:Lime !important");
                         element.setAttribute("value", currentPassword.Login);
 
-                        //loginFilled = true;
+                        loginFilled = true;
                     }
                     else if (!passwordfilled && Tools.IsPassword(element.id))
                     {
                         element.setAttribute("style", "background-color:Lime !important");
                         element.setAttribute("value", currentPassword.Password);
 
-                        //passwordfilled = true;
+                        passwordfilled = true;
                     }
                 }
             }
@@ -909,7 +941,7 @@ namespace PasswordKeeper
                 return;
 
             // Set selected entry label and variables
-            SetSelectedPassword(((PasswordModel)e.ListView.FocusedObject).DisplayName);
+            SetSelectedPassword(((PasswordModel)e.ListView.FocusedObject).Id, ((PasswordModel)e.ListView.FocusedObject).DisplayName);
 
             // Save the value of the clicked cell
             switch (e.Column.Index)
@@ -948,7 +980,7 @@ namespace PasswordKeeper
             if (e.RowIndex == -1)
                 return;
 
-            SetSelectedPassword(((PasswordModel)olvPasswords.FocusedObject).DisplayName);
+            SetSelectedPassword(((PasswordModel)olvPasswords.FocusedObject).Id, ((PasswordModel)olvPasswords.FocusedObject).DisplayName);
 
             ctxMenuCopy.Show(Cursor.Position.X, Cursor.Position.Y);
         }
@@ -1252,18 +1284,19 @@ namespace PasswordKeeper
         {
             lblSelectedEntry.Text = string.Empty;
 
-            // Clear variables
+            Tools.IdCurrentPassword = null;
         }
 
         /// <summary>
         /// Set selected password label and variables
         /// </summary>
+        /// <param name="currentPasswordId">Password id</param>
         /// <param name="currentPasswordDisplayName">Password display name</param>
-        private void SetSelectedPassword(string currentPasswordDisplayName)
+        private void SetSelectedPassword(int currentPasswordId, string currentPasswordDisplayName)
         {
             lblSelectedEntry.Text = string.Concat("Selected Entry : ", currentPasswordDisplayName);
 
-            // Set variables
+            Tools.IdCurrentPassword = currentPasswordId;
         }
 
         #endregion

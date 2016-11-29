@@ -101,14 +101,15 @@ namespace PasswordKeeper
             // 
             this.toolStripAddLogin.Name = "toolStripAddLogin";
             this.toolStripAddLogin.Size = new System.Drawing.Size(149, 22);
-            this.toolStripAddLogin.Text = "Add Login";
+            this.toolStripAddLogin.Text = "Set Login Field";
             toolStripAddLogin.Click += ToolStripAddLogin_Click;
             // 
             // toolStripAddPassword
             // 
             this.toolStripAddPassword.Name = "toolStripAddPassword";
             this.toolStripAddPassword.Size = new System.Drawing.Size(149, 22);
-            this.toolStripAddPassword.Text = "Add Password";
+            this.toolStripAddPassword.Text = "Set Password Field";
+            toolStripAddPassword.Click += ToolStripAddPassword_Click;
             // 
             // IEModule
             // 
@@ -179,8 +180,8 @@ namespace PasswordKeeper
         }
 
         // Context menu
-        private IOleCommandTarget targetObj = null;
-        private mshtml.IHTMLElement targetElem = null;
+        private IOleCommandTarget TargetObj = null;
+        private mshtml.IHTMLElement TargetElem = null;
 
         public string MasterLogin { get; set; }
         public string MasterPassword { get; set; }
@@ -206,8 +207,7 @@ namespace PasswordKeeper
         // :radioactive: TEST
         void cmdItemFillFields_OnClick(object sender, object htmlDoc)
         {
-            mshtml.IHTMLElementCollection inputCollection =
-                (mshtml.IHTMLElementCollection)HTMLDocument.getElementsByTagName("input");
+            mshtml.IHTMLElementCollection inputCollection = HTMLDocument.getElementsByTagName("input");
             foreach (mshtml.IHTMLElement element in inputCollection)
             {
                 if (element.id != null)
@@ -242,13 +242,17 @@ namespace PasswordKeeper
             if (e.ContextMenu != ADXIEShowContextMenuEventArgs.ADXIEDocContextMenu.Control)
                 return;
 
-            targetObj = e.Container as IOleCommandTarget;
-            targetElem = e.HTMLElement as mshtml.IHTMLElement;
+            TargetObj = e.Container as IOleCommandTarget;
+            TargetElem = e.HTMLElement as mshtml.IHTMLElement;
 
             // Only input controls but no buttons
-            if (targetElem.tagName.ToLower().Equals("input") && !targetElem.getAttribute("type").ToString().ToLower().Equals("submit"))
+            if (TargetElem.tagName.ToLower().Equals("input") && !TargetElem.getAttribute("type").ToString().ToLower().Equals("submit"))
             {
                 e.Handled = true;
+
+                // Disabling menus if no password is selected in the list
+                toolStripAddLogin.Enabled = Tools.IdCurrentPassword != null;
+                toolStripAddPassword.Enabled = Tools.IdCurrentPassword != null;
 
                 contextMenu.Show(e.Location);
             }
@@ -256,10 +260,23 @@ namespace PasswordKeeper
 
         private void ToolStripAddLogin_Click(object sender, EventArgs e)
         {
-            if (targetElem != null)
-                MessageBox.Show(this, string.Concat("Id du contrôle de saisie du login : ", targetElem.id), ModuleName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (TargetElem != null)
+                MessageBox.Show(this, string.Concat("Id du contrôle de saisie du login : ", TargetElem.id), ModuleName, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            object toto = Tools.CurrentModule.olvPasswords.FocusedObject;
+            // Add custom control id if a password is selected in the list
+            if (Tools.IdCurrentPassword != null)
+            {
+                new CustomFieldController().AddOrUpdateCustomField(Tools.TypeField.Login, Convert.ToInt32(Tools.IdCurrentPassword), TargetElem.id);
+
+                // HTMLDocument.getElementById(TargetElem.id).setAttribute("value", "HOURRA !!!!");
+            }
+        }
+
+        private void ToolStripAddPassword_Click(object sender, EventArgs e)
+        {
+            // Add custom control id if a password is selected in the list
+            if (Tools.IdCurrentPassword != null)
+                new CustomFieldController().AddOrUpdateCustomField(Tools.TypeField.Password, Convert.ToInt32(Tools.IdCurrentPassword), TargetElem.id);
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 4)]
