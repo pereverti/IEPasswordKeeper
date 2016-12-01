@@ -65,6 +65,15 @@ namespace PasswordKeeper
                 frmPasswordManagement_FormClosing(this, new FormClosingEventArgs(CloseReason.None, true));
             }
         }
+
+        private void btnResetCustomFields_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to reset the custom login and password fields ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                new CustomFieldController().Delete(Passwd.Id);
+            }
+        }
+
         private void frmPasswordManagement_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.None)

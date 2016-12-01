@@ -68,5 +68,23 @@ namespace PasswordKeeper
 
             return customFields;
         }
+
+        /// <summary>
+        /// Delete all custom fields stored for a password
+        /// </summary>
+        /// <param name="pwdId">Password Id</param>
+        internal void Delete(int pwdId)
+        {
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            {
+                IEnumerable<CustomField> cFields = from field in context.CustomFields
+                                                   where field.IdPassword == pwdId
+                                                   select field;
+
+                cFields.ToList().ForEach(field => context.CustomFields.Remove(field));
+
+                context.SaveChanges();
+            }
+        }
     }
 }

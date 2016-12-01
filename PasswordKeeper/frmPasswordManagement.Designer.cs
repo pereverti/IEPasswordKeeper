@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label lblDisplayName;
             System.Windows.Forms.Label lblUserName;
             System.Windows.Forms.Label lblPassword;
@@ -35,9 +36,9 @@
             System.Windows.Forms.Label lblUrl;
             System.Windows.Forms.Label lblPasswordConfirmation;
             System.Windows.Forms.Label lblPasswordCrackTime;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPasswordManagement));
             System.Windows.Forms.Label lblPasswordEntropy;
             System.Windows.Forms.Label lblPasswordLength;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPasswordManagement));
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.txtDisplayName = new System.Windows.Forms.TextBox();
@@ -49,11 +50,13 @@
             this.btnShowPassword = new System.Windows.Forms.Button();
             this.txtPasswordConfirmation = new System.Windows.Forms.TextBox();
             this.grpPasswordProperties = new System.Windows.Forms.GroupBox();
-            this.cpbPasswordStrength = new CircularProgressBar.CircularProgressBar();
-            this.lblPasswordStrength = new System.Windows.Forms.Label();
-            this.lblPasswordCrackTimeValue = new System.Windows.Forms.Label();
-            this.lblPasswordEntropyValue = new System.Windows.Forms.Label();
             this.lblPasswordLengthValue = new System.Windows.Forms.Label();
+            this.lblPasswordEntropyValue = new System.Windows.Forms.Label();
+            this.lblPasswordCrackTimeValue = new System.Windows.Forms.Label();
+            this.lblPasswordStrength = new System.Windows.Forms.Label();
+            this.cpbPasswordStrength = new CircularProgressBar.CircularProgressBar();
+            this.btnResetCustomFields = new System.Windows.Forms.Button();
+            this.toolTipResetCustomFields = new System.Windows.Forms.ToolTip(this.components);
             lblDisplayName = new System.Windows.Forms.Label();
             lblUserName = new System.Windows.Forms.Label();
             lblPassword = new System.Windows.Forms.Label();
@@ -119,6 +122,33 @@
             lblPasswordConfirmation.Size = new System.Drawing.Size(78, 15);
             lblPasswordConfirmation.TabIndex = 15;
             lblPasswordConfirmation.Text = "Confirmation";
+            // 
+            // lblPasswordCrackTime
+            // 
+            lblPasswordCrackTime.AutoSize = true;
+            lblPasswordCrackTime.Location = new System.Drawing.Point(211, 94);
+            lblPasswordCrackTime.Name = "lblPasswordCrackTime";
+            lblPasswordCrackTime.Size = new System.Drawing.Size(85, 15);
+            lblPasswordCrackTime.TabIndex = 19;
+            lblPasswordCrackTime.Text = "Time to crack :";
+            // 
+            // lblPasswordEntropy
+            // 
+            lblPasswordEntropy.AutoSize = true;
+            lblPasswordEntropy.Location = new System.Drawing.Point(211, 55);
+            lblPasswordEntropy.Name = "lblPasswordEntropy";
+            lblPasswordEntropy.Size = new System.Drawing.Size(54, 15);
+            lblPasswordEntropy.TabIndex = 23;
+            lblPasswordEntropy.Text = "Entropy :";
+            // 
+            // lblPasswordLength
+            // 
+            lblPasswordLength.AutoSize = true;
+            lblPasswordLength.Location = new System.Drawing.Point(211, 19);
+            lblPasswordLength.Name = "lblPasswordLength";
+            lblPasswordLength.Size = new System.Drawing.Size(50, 15);
+            lblPasswordLength.TabIndex = 25;
+            lblPasswordLength.Text = "Length :";
             // 
             // btnCancel
             // 
@@ -226,15 +256,6 @@
             this.txtPasswordConfirmation.Size = new System.Drawing.Size(290, 23);
             this.txtPasswordConfirmation.TabIndex = 8;
             // 
-            // lblPasswordCrackTime
-            // 
-            lblPasswordCrackTime.AutoSize = true;
-            lblPasswordCrackTime.Location = new System.Drawing.Point(211, 94);
-            lblPasswordCrackTime.Name = "lblPasswordCrackTime";
-            lblPasswordCrackTime.Size = new System.Drawing.Size(85, 15);
-            lblPasswordCrackTime.TabIndex = 19;
-            lblPasswordCrackTime.Text = "Time to crack :";
-            // 
             // grpPasswordProperties
             // 
             this.grpPasswordProperties.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -253,6 +274,46 @@
             this.grpPasswordProperties.TabIndex = 20;
             this.grpPasswordProperties.TabStop = false;
             this.grpPasswordProperties.Text = "Password Strength";
+            // 
+            // lblPasswordLengthValue
+            // 
+            this.lblPasswordLengthValue.AutoSize = true;
+            this.lblPasswordLengthValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPasswordLengthValue.Location = new System.Drawing.Point(300, 13);
+            this.lblPasswordLengthValue.Name = "lblPasswordLengthValue";
+            this.lblPasswordLengthValue.Size = new System.Drawing.Size(53, 21);
+            this.lblPasswordLengthValue.TabIndex = 26;
+            this.lblPasswordLengthValue.Text = "Value";
+            // 
+            // lblPasswordEntropyValue
+            // 
+            this.lblPasswordEntropyValue.AutoSize = true;
+            this.lblPasswordEntropyValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPasswordEntropyValue.Location = new System.Drawing.Point(300, 49);
+            this.lblPasswordEntropyValue.Name = "lblPasswordEntropyValue";
+            this.lblPasswordEntropyValue.Size = new System.Drawing.Size(53, 21);
+            this.lblPasswordEntropyValue.TabIndex = 24;
+            this.lblPasswordEntropyValue.Text = "Value";
+            // 
+            // lblPasswordCrackTimeValue
+            // 
+            this.lblPasswordCrackTimeValue.AutoSize = true;
+            this.lblPasswordCrackTimeValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPasswordCrackTimeValue.Location = new System.Drawing.Point(300, 88);
+            this.lblPasswordCrackTimeValue.Name = "lblPasswordCrackTimeValue";
+            this.lblPasswordCrackTimeValue.Size = new System.Drawing.Size(53, 21);
+            this.lblPasswordCrackTimeValue.TabIndex = 22;
+            this.lblPasswordCrackTimeValue.Text = "Value";
+            // 
+            // lblPasswordStrength
+            // 
+            this.lblPasswordStrength.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPasswordStrength.Location = new System.Drawing.Point(180, 126);
+            this.lblPasswordStrength.Name = "lblPasswordStrength";
+            this.lblPasswordStrength.Size = new System.Drawing.Size(241, 43);
+            this.lblPasswordStrength.TabIndex = 21;
+            this.lblPasswordStrength.Text = "Strength";
+            this.lblPasswordStrength.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cpbPasswordStrength
             // 
@@ -287,63 +348,19 @@
             this.cpbPasswordStrength.TextMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.cpbPasswordStrength.Value = 1;
             // 
-            // lblPasswordStrength
+            // btnResetCustomFields
             // 
-            this.lblPasswordStrength.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPasswordStrength.Location = new System.Drawing.Point(180, 126);
-            this.lblPasswordStrength.Name = "lblPasswordStrength";
-            this.lblPasswordStrength.Size = new System.Drawing.Size(241, 43);
-            this.lblPasswordStrength.TabIndex = 21;
-            this.lblPasswordStrength.Text = "Strength";
-            this.lblPasswordStrength.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPasswordCrackTimeValue
-            // 
-            this.lblPasswordCrackTimeValue.AutoSize = true;
-            this.lblPasswordCrackTimeValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPasswordCrackTimeValue.Location = new System.Drawing.Point(300, 88);
-            this.lblPasswordCrackTimeValue.Name = "lblPasswordCrackTimeValue";
-            this.lblPasswordCrackTimeValue.Size = new System.Drawing.Size(53, 21);
-            this.lblPasswordCrackTimeValue.TabIndex = 22;
-            this.lblPasswordCrackTimeValue.Text = "Value";
-            // 
-            // lblPasswordEntropyValue
-            // 
-            this.lblPasswordEntropyValue.AutoSize = true;
-            this.lblPasswordEntropyValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPasswordEntropyValue.Location = new System.Drawing.Point(300, 49);
-            this.lblPasswordEntropyValue.Name = "lblPasswordEntropyValue";
-            this.lblPasswordEntropyValue.Size = new System.Drawing.Size(53, 21);
-            this.lblPasswordEntropyValue.TabIndex = 24;
-            this.lblPasswordEntropyValue.Text = "Value";
-            // 
-            // lblPasswordEntropy
-            // 
-            lblPasswordEntropy.AutoSize = true;
-            lblPasswordEntropy.Location = new System.Drawing.Point(211, 55);
-            lblPasswordEntropy.Name = "lblPasswordEntropy";
-            lblPasswordEntropy.Size = new System.Drawing.Size(54, 15);
-            lblPasswordEntropy.TabIndex = 23;
-            lblPasswordEntropy.Text = "Entropy :";
-            // 
-            // lblPasswordLengthValue
-            // 
-            this.lblPasswordLengthValue.AutoSize = true;
-            this.lblPasswordLengthValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPasswordLengthValue.Location = new System.Drawing.Point(300, 13);
-            this.lblPasswordLengthValue.Name = "lblPasswordLengthValue";
-            this.lblPasswordLengthValue.Size = new System.Drawing.Size(53, 21);
-            this.lblPasswordLengthValue.TabIndex = 26;
-            this.lblPasswordLengthValue.Text = "Value";
-            // 
-            // lblPasswordLength
-            // 
-            lblPasswordLength.AutoSize = true;
-            lblPasswordLength.Location = new System.Drawing.Point(211, 19);
-            lblPasswordLength.Name = "lblPasswordLength";
-            lblPasswordLength.Size = new System.Drawing.Size(50, 15);
-            lblPasswordLength.TabIndex = 25;
-            lblPasswordLength.Text = "Length :";
+            this.btnResetCustomFields.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResetCustomFields.CausesValidation = false;
+            this.btnResetCustomFields.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnResetCustomFields.Location = new System.Drawing.Point(96, 432);
+            this.btnResetCustomFields.Name = "btnResetCustomFields";
+            this.btnResetCustomFields.Size = new System.Drawing.Size(126, 23);
+            this.btnResetCustomFields.TabIndex = 21;
+            this.btnResetCustomFields.Text = "Reset Custom Fields";
+            this.toolTipResetCustomFields.SetToolTip(this.btnResetCustomFields, "Delete custom login and password fileds set by user for this entry");
+            this.btnResetCustomFields.UseVisualStyleBackColor = true;
+            this.btnResetCustomFields.Click += new System.EventHandler(this.btnResetCustomFields_Click);
             // 
             // frmPasswordManagement
             // 
@@ -352,6 +369,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(451, 467);
             this.ControlBox = false;
+            this.Controls.Add(this.btnResetCustomFields);
             this.Controls.Add(this.grpPasswordProperties);
             this.Controls.Add(this.txtPasswordConfirmation);
             this.Controls.Add(lblPasswordConfirmation);
@@ -402,5 +420,7 @@
         private System.Windows.Forms.Label lblPasswordEntropyValue;
         private System.Windows.Forms.Label lblPasswordCrackTimeValue;
         private System.Windows.Forms.Label lblPasswordLengthValue;
+        private System.Windows.Forms.Button btnResetCustomFields;
+        private System.Windows.Forms.ToolTip toolTipResetCustomFields;
     }
 }
