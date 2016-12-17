@@ -85,10 +85,6 @@ namespace PasswordKeeper
             this.cmdItemShowHide.Caption = "Show / Hide";
             this.cmdItemShowHide.CommandGuid = "{75235D32-8F17-4E67-9964-2890A4D6A04E}";
             // 
-            // adxiehtmlDocEvents1
-            // 
-            this.adxiehtmlDocEvents1.OnClick += new AddinExpress.IE.ADXIEHTMLEventObjectEx_EventHandler(this.adxiehtmlDocEvents1_OnClick);
-            // 
             // contextMenu
             // 
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -102,14 +98,12 @@ namespace PasswordKeeper
             this.toolStripAddLogin.Name = "toolStripAddLogin";
             this.toolStripAddLogin.Size = new System.Drawing.Size(149, 22);
             this.toolStripAddLogin.Text = "Set Login Field";
-            toolStripAddLogin.Click += ToolStripAddLogin_Click;
             // 
             // toolStripAddPassword
             // 
             this.toolStripAddPassword.Name = "toolStripAddPassword";
             this.toolStripAddPassword.Size = new System.Drawing.Size(149, 22);
             this.toolStripAddPassword.Text = "Set Password Field";
-            toolStripAddPassword.Click += ToolStripAddPassword_Click;
             // 
             // IEModule
             // 
@@ -119,6 +113,7 @@ namespace PasswordKeeper
             this.LoadInMainProcess = false;
             this.ModuleName = "PasswordKeeper";
             this.OnConnect += new AddinExpress.IE.ADXIEConnect_EventHandler(this.IEModule_OnConnect);
+            this.OnSendMessage += new AddinExpress.IE.ADXIESendMessage_EventHandler(this.IEModule_OnSendMessage);
             this.OnShowContextMenu += new AddinExpress.IE.ADXIEShowContextMenu_EventHandler(this.IEModule_OnShowContextMenu);
             this.contextMenu.ResumeLayout(false);
 
@@ -231,11 +226,6 @@ namespace PasswordKeeper
             }
         }
 
-        private void adxiehtmlDocEvents1_OnClick(object sender, object eventObject, ADXCancelEventArgs e)
-        {
-
-        }
-
         private void IEModule_OnShowContextMenu(object sender, ADXIEShowContextMenuEventArgs e)
         {
             // Only controls
@@ -260,21 +250,20 @@ namespace PasswordKeeper
 
         private void ToolStripAddLogin_Click(object sender, EventArgs e)
         {
-            if (TargetElem != null)
-                MessageBox.Show(this, string.Concat("Id du contrôle de saisie du login : ", TargetElem.id), ModuleName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (TargetElem == null)
+                return;
 
-            // Add custom control id if a password is selected in the list
+            // Add custom control id for the login field if an entry is selected in the list
             if (Tools.IdCurrentPassword != null)
-            {
                 new CustomFieldController().AddOrUpdateCustomField(Tools.TypeField.Login, Convert.ToInt32(Tools.IdCurrentPassword), TargetElem.id);
-
-                // HTMLDocument.getElementById(TargetElem.id).setAttribute("value", "HOURRA !!!!");
-            }
         }
 
         private void ToolStripAddPassword_Click(object sender, EventArgs e)
         {
-            // Add custom control id if a password is selected in the list
+            if (TargetElem == null)
+                return;
+
+            // Add custom control id for the password field if an entry is selected in the list
             if (Tools.IdCurrentPassword != null)
                 new CustomFieldController().AddOrUpdateCustomField(Tools.TypeField.Password, Convert.ToInt32(Tools.IdCurrentPassword), TargetElem.id);
         }
@@ -294,6 +283,35 @@ namespace PasswordKeeper
 
             [PreserveSig]
             int Exec(IntPtr pCmdGroup, [In] uint nCmdID, [In] uint nCmdexecopt, [In] IntPtr pvaIn, [In] IntPtr pvaOut);
+        }
+
+        internal const int WM_USER = 0x0400;
+        internal const int WM_TEXTCHANGED = WM_USER + 10;
+        private ADXIEAdvancedBarItem adxieAdvancedBarItem1;
+
+        private void IEModule_OnSendMessage(ADXIESendMessageEventArgs e)
+        {
+            //if (e.Message == WM_TEXTCHANGED)
+            //{
+            //    if (adxieAdvancedBarItem1.BarObj != null)
+            //    {
+            //        IntPtr lpText = e.WParam;
+
+            //        try
+            //        {
+            //            string text = Marshal.PtrToStringUni(lpText);
+            //            ((MyIEAdvancedBar1)adxieAdvancedBarItem1.BarObj).UpdateText(text);
+            //        }
+            //        catch (Exception)
+            //        {
+            //        }
+            //        finally
+            //        {
+            //            if (lpText != IntPtr.Zero)
+            //                Marshal.ZeroFreeCoTaskMemUnicode(lpText);
+            //        }
+            //    }
+            //}
         }
     }
 }
