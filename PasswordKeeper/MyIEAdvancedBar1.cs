@@ -43,10 +43,10 @@ namespace PasswordKeeper
         private ToolStripMenuItem toolStripCopyPassword;
         private ToolStripMenuItem copyURLToolStripMenuItem;
         internal FastDataListView olvPasswords;
-        private BrightIdeasSoftware.OLVColumn colDisplayName;
-        private BrightIdeasSoftware.OLVColumn colUserName;
-        private BrightIdeasSoftware.OLVColumn colPasswordUnreadable;
-        private BrightIdeasSoftware.OLVColumn colUrl;
+        private OLVColumn colDisplayName;
+        private OLVColumn colUserName;
+        private OLVColumn colPasswordUnreadable;
+        private OLVColumn colUrl;
         private Button btnShowPassword;
         private ToolTip ttAutoTypeTop;
         private ToolTip ttAutoTypeBottom;
@@ -129,9 +129,9 @@ namespace PasswordKeeper
             lblListPasswords.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             lblListPasswords.Location = new System.Drawing.Point(4, 116);
             lblListPasswords.Name = "lblListPasswords";
-            lblListPasswords.Size = new System.Drawing.Size(83, 15);
+            lblListPasswords.Size = new System.Drawing.Size(63, 15);
             lblListPasswords.TabIndex = 14;
-            lblListPasswords.Text = "Passwords List";
+            lblListPasswords.Text = "Entries List";
             // 
             // lblTitle
             // 
@@ -798,6 +798,9 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Login);
 
             WriteIeStatusBar("User copied in clipboard");
+            
+            // Start countdown timer
+            ClearClipboardCountDown();
         }
 
         /// <summary>
@@ -808,6 +811,9 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Password);
 
             WriteIeStatusBar("Password copied in clipboard");
+
+            // Start countdown timer
+            ClearClipboardCountDown();
         }
 
         /// <summary>
@@ -818,6 +824,9 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Url);
 
             WriteIeStatusBar("URL copied in clipboard");
+
+            // Start countdown timer
+            ClearClipboardCountDown();
         }
 
         /// <summary>

@@ -186,6 +186,9 @@ namespace PasswordKeeper
             cmdItemFillFields.OnClick += cmdItemFillFields_OnClick;
             cmdItemShowHide.OnClick += CmdItemShowHide_OnClick;
 
+            toolStripAddLogin.Click += ToolStripAddLogin_Click;
+            toolStripAddPassword.Click += ToolStripAddPassword_Click;
+
             // :radioactive: Test for shared data
             SendMessageToAll(Tools.WM_UPDATE_OPTIONS, IntPtr.Zero, IntPtr.Zero);
         }

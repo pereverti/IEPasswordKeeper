@@ -112,13 +112,16 @@ namespace PasswordKeeper
             switch (Mode)
             {
                 case Tools.PasswordAction.Create:
-                    Text = "Create new password";
+                    Text = "Create new entry";
+
                     btnOk.Text = "Create";
                     btnDelete.Visible = false;
+                    btnResetCustomFields.Visible = false;
 
                     break;
                 case Tools.PasswordAction.Edit:
                     Text = string.Concat("Edit \"", Passwd.DisplayName, "\" entry");
+
                     btnOk.Text = "Update";
 
                     MapObjectToFields();

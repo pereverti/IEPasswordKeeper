@@ -358,7 +358,7 @@
             this.btnResetCustomFields.Size = new System.Drawing.Size(126, 23);
             this.btnResetCustomFields.TabIndex = 21;
             this.btnResetCustomFields.Text = "Reset Custom Fields";
-            this.toolTipResetCustomFields.SetToolTip(this.btnResetCustomFields, "Delete custom login and password fileds set by user for this entry");
+            this.toolTipResetCustomFields.SetToolTip(this.btnResetCustomFields, "Delete custom login and password fields set by user for auto complete");
             this.btnResetCustomFields.UseVisualStyleBackColor = true;
             this.btnResetCustomFields.Click += new System.EventHandler(this.btnResetCustomFields_Click);
             // 
