@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -123,6 +124,13 @@ namespace PasswordKeeper
         internal static bool IsPassword(string id)
         {
             return PasswordControlNames.Any(pcn => id.ToLower().Contains(pcn));
+        }
+
+        internal static string GetMacAddress()
+        {
+            return (from nic in NetworkInterface.GetAllNetworkInterfaces()
+                    where nic.OperationalStatus == OperationalStatus.Up
+                    select nic.GetPhysicalAddress().ToString()).FirstOrDefault();
         }
     }
 }

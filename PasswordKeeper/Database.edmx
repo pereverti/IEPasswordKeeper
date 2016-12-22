@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ConnectionTemp">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="ComputerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ComputerMacAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ComputerUserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ConnexionDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CustomField">
           <Key>
             <PropertyRef Name="IdPassword" />
@@ -39,6 +49,18 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ConnectionTemp_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ConnectionTemp" Type="Self.ConnectionTemp" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConnectionTemp">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CustomField_Password">
           <End Role="Password" Type="Self.Password" Multiplicity="1" />
           <End Role="CustomField" Type="Self.CustomField" Multiplicity="*" />
@@ -64,9 +86,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EntityModelStoreContainer">
+          <EntitySet Name="ConnectionTemp" EntityType="Self.ConnectionTemp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomField" EntityType="Self.CustomField" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Password" EntityType="Self.Password" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ConnectionTemp_User" Association="Self.FK_ConnectionTemp_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ConnectionTemp" EntitySet="ConnectionTemp" />
+          </AssociationSet>
           <AssociationSet Name="FK_CustomField_Password" Association="Self.FK_CustomField_Password">
             <End Role="Password" EntitySet="Password" />
             <End Role="CustomField" EntitySet="CustomField" />
@@ -108,6 +135,11 @@
             <End Role="Password" EntitySet="Passwords" />
             <End Role="CustomField" EntitySet="CustomFields" />
           </AssociationSet>
+          <EntitySet Name="ConnectionTemps" EntityType="EntityModel.ConnectionTemp" />
+          <AssociationSet Name="FK_ConnectionTemp_User" Association="EntityModel.FK_ConnectionTemp_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ConnectionTemp" EntitySet="ConnectionTemps" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -120,6 +152,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Passwords" Relationship="EntityModel.FK_Password_User" FromRole="User" ToRole="Password" />
+          <NavigationProperty Name="ConnectionTemp" Relationship="EntityModel.FK_ConnectionTemp_User" FromRole="User" ToRole="ConnectionTemp" />
         </EntityType>
         <Association Name="FK_Password_User">
           <End Type="EntityModel.User" Role="User" Multiplicity="1" />
@@ -152,6 +185,29 @@
             </Principal>
             <Dependent Role="CustomField">
               <PropertyRef Name="IdPassword" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ConnectionTemp">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="ComputerName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ComputerMacAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ComputerUserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ConnexionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="EntityModel.FK_ConnectionTemp_User" FromRole="ConnectionTemp" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_ConnectionTemp_User">
+          <End Type="EntityModel.User" Role="User" Multiplicity="1" />
+          <End Type="EntityModel.ConnectionTemp" Role="ConnectionTemp" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ConnectionTemp">
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -194,6 +250,17 @@
                 <ScalarProperty Name="ControlId" ColumnName="ControlId" />
                 <ScalarProperty Name="IdCustomFieldType" ColumnName="IdCustomFieldType" />
                 <ScalarProperty Name="IdPassword" ColumnName="IdPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConnectionTemps">
+            <EntityTypeMapping TypeName="EntityModel.ConnectionTemp">
+              <MappingFragment StoreEntitySet="ConnectionTemp">
+                <ScalarProperty Name="ConnexionDate" ColumnName="ConnexionDate" />
+                <ScalarProperty Name="ComputerUserName" ColumnName="ComputerUserName" />
+                <ScalarProperty Name="ComputerMacAddress" ColumnName="ComputerMacAddress" />
+                <ScalarProperty Name="ComputerName" ColumnName="ComputerName" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,5 +29,6 @@ namespace PasswordKeeper
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Password> Passwords { get; set; }
+        public virtual ConnectionTemp ConnectionTemp { get; set; }
     }
 }

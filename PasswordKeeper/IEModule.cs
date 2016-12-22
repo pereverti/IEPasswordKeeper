@@ -23,12 +23,11 @@ namespace PasswordKeeper
 
         private ADXIEAdvancedBarsManager adxieAdvancedBarsManager1;
         private ADXIEAdvancedBarItem advBarItemPasswordLeftPane;
-        private ADXIECommandItem cmdItemShowHide;
+        private ADXIECommandItem cmdPasswordKeeper;
         private ADXIEHTMLDocEvents adxiehtmlDocEvents1;
         private ContextMenuStrip contextMenu;
         private ToolStripMenuItem toolStripAddLogin;
         private ToolStripMenuItem toolStripAddPassword;
-        private ADXIECommandItem cmdItemFillFields;
 
         public IEModule(IContainer container)
         {
@@ -53,8 +52,7 @@ namespace PasswordKeeper
             this.components = new System.ComponentModel.Container();
             this.adxieAdvancedBarsManager1 = new AddinExpress.IE.ADXIEAdvancedBarsManager(this.components);
             this.advBarItemPasswordLeftPane = new AddinExpress.IE.ADXIEAdvancedBarItem(this.components);
-            this.cmdItemFillFields = new AddinExpress.IE.ADXIECommandItem(this.components);
-            this.cmdItemShowHide = new AddinExpress.IE.ADXIECommandItem(this.components);
+            this.cmdPasswordKeeper = new AddinExpress.IE.ADXIECommandItem(this.components);
             this.adxiehtmlDocEvents1 = new AddinExpress.IE.ADXIEHTMLDocEvents(this.components);
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripAddLogin = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,16 +72,11 @@ namespace PasswordKeeper
             this.advBarItemPasswordLeftPane.Shortcut = System.Windows.Forms.Shortcut.AltF12;
             this.advBarItemPasswordLeftPane.Visible = true;
             // 
-            // cmdItemFillFields
+            // cmdPasswordKeeper
             // 
-            this.cmdItemFillFields.Caption = "Fill Fields";
-            this.cmdItemFillFields.CommandGuid = "{69E4B3E2-8DAD-4FA6-9E1A-20A8A1410070}";
-            // 
-            // cmdItemShowHide
-            // 
-            this.cmdItemShowHide.ActiveIcon = "Icons.SampleIcon2";
-            this.cmdItemShowHide.Caption = "Show / Hide";
-            this.cmdItemShowHide.CommandGuid = "{75235D32-8F17-4E67-9964-2890A4D6A04E}";
+            this.cmdPasswordKeeper.ActiveIcon = "Icons.SampleIcon2";
+            this.cmdPasswordKeeper.Caption = "Password Keeper";
+            this.cmdPasswordKeeper.CommandGuid = "{75235D32-8F17-4E67-9964-2890A4D6A04E}";
             // 
             // contextMenu
             // 
@@ -107,8 +100,7 @@ namespace PasswordKeeper
             // 
             // IEModule
             // 
-            this.Commands.Add(this.cmdItemFillFields);
-            this.Commands.Add(this.cmdItemShowHide);
+            this.Commands.Add(this.cmdPasswordKeeper);
             this.HandleShortcuts = true;
             this.LoadInMainProcess = false;
             this.ModuleName = "PasswordKeeper";
@@ -183,8 +175,7 @@ namespace PasswordKeeper
 
         private void IEModule_OnConnect(object sender, int threadId)
         {
-            cmdItemFillFields.OnClick += cmdItemFillFields_OnClick;
-            cmdItemShowHide.OnClick += CmdItemShowHide_OnClick;
+            cmdPasswordKeeper.OnClick += CmdPasswordKeeper_OnClick;
 
             toolStripAddLogin.Click += ToolStripAddLogin_Click;
             toolStripAddPassword.Click += ToolStripAddPassword_Click;
@@ -196,37 +187,10 @@ namespace PasswordKeeper
         /// <summary>
         /// Show or hide the left pane
         /// </summary>
-        private void CmdItemShowHide_OnClick(object sender, object htmlDoc)
+        private void CmdPasswordKeeper_OnClick(object sender, object htmlDoc)
         {
             // Show / Hide the left pane
             advBarItemPasswordLeftPane.Visible = !advBarItemPasswordLeftPane.Visible;
-        }
-
-        // :radioactive: TEST
-        void cmdItemFillFields_OnClick(object sender, object htmlDoc)
-        {
-            mshtml.IHTMLElementCollection inputCollection = HTMLDocument.getElementsByTagName("input");
-            foreach (mshtml.IHTMLElement element in inputCollection)
-            {
-                if (element.id != null)
-                {
-                    if (element.id.ToLower().Contains("name"))
-                    {
-                        if (element.id.ToLower().Contains("first"))
-                            element.setAttribute("value", Properties.Settings.Default.FirstName);
-                        else
-                            element.setAttribute("value", Properties.Settings.Default.LastName);
-                    }
-                    else if (element.id.ToLower().Contains("mail"))
-                    {
-                        element.setAttribute("value", Properties.Settings.Default.Email);
-                    }
-                    else if (element.id.ToLower().Contains("phone"))
-                    {
-                        element.setAttribute("value", Properties.Settings.Default.Phone);
-                    }
-                }
-            }
         }
 
         private void IEModule_OnShowContextMenu(object sender, ADXIEShowContextMenuEventArgs e)

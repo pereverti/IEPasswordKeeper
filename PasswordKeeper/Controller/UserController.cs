@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Liphsoft.Crypto.Argon2;
 
 namespace PasswordKeeper
@@ -77,7 +76,7 @@ namespace PasswordKeeper
         /// </summary>
         /// <param name="login">Login</param>
         /// <param name="password">Password</param>
-        /// <returns>The uses which matches with the login/password</returns>
+        /// <returns>The user who matches with the login/password</returns>
         internal UserModel GetUser(string login, string password)
         {
             UserModel user = null;
@@ -102,6 +101,34 @@ namespace PasswordKeeper
                         CreationDate = currentUser.CreationDate
                     };
                 }
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// Get a user
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <returns>The user who matches with the user ID</returns>
+        internal UserModel GetUser(int userId)
+        {
+            UserModel user;
+
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            {
+                User currentUser = (from usr in context.Users
+                                    where usr.Id == userId && usr.IsActive
+                                    select usr).FirstOrDefault();
+
+                    user = new UserModel()
+                    {
+                        Id = currentUser.Id,
+                        Login = currentUser.Login,
+                        DisplayName = currentUser.DisplayName,
+                        IsActive = currentUser.IsActive,
+                        CreationDate = currentUser.CreationDate
+                    };
             }
 
             return user;

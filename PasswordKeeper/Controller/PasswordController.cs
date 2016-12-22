@@ -13,7 +13,7 @@ namespace PasswordKeeper
         private const string SaltKey = "~=g^QrT);zC19[3}`9Wy~oj!5eIxpF";
         private const string PepperKey = "%+&j?c;o%Gy&cWRxYvIghdZr!#*/Jf";
 
-        private string Key256Bits;
+        private readonly string Key256Bits;
 
         internal PasswordController()
         {
@@ -22,8 +22,6 @@ namespace PasswordKeeper
         internal PasswordController(string key)
         {
             Key256Bits = Get256BitsKey(key);
-
-            //Key256Bits = "%+&j?c;o%Gy&cWRxYvIghdZr!#*/Jf12";
         }
 
         /// <summary>

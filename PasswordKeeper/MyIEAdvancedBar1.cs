@@ -6,6 +6,7 @@ using AddinExpress.IE;
 using System.Collections.Generic;
 using BrightIdeasSoftware;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace PasswordKeeper
 {
@@ -135,7 +136,7 @@ namespace PasswordKeeper
             // 
             // lblTitle
             // 
-            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             lblTitle.AutoSize = true;
             lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -234,7 +235,7 @@ namespace PasswordKeeper
             // 
             // pnlLogin
             // 
-            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlLogin.Controls.Add(this.btnShowPassword);
             this.pnlLogin.Controls.Add(this.btnDeleteUser);
@@ -261,6 +262,7 @@ namespace PasswordKeeper
             this.btnShowPassword.Name = "btnShowPassword";
             this.btnShowPassword.Size = new System.Drawing.Size(45, 23);
             this.btnShowPassword.TabIndex = 4;
+            this.btnShowPassword.TabStop = false;
             this.btnShowPassword.Text = "●●●";
             this.btnShowPassword.UseVisualStyleBackColor = true;
             this.btnShowPassword.Click += new System.EventHandler(this.btnShowPassword_Click);
@@ -293,7 +295,7 @@ namespace PasswordKeeper
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(113, 65);
@@ -328,7 +330,7 @@ namespace PasswordKeeper
             // 
             // txtDisplayName
             // 
-            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(113, 94);
             this.txtDisplayName.Name = "txtDisplayName";
@@ -360,7 +362,7 @@ namespace PasswordKeeper
             // 
             // txtPassword
             // 
-            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(113, 36);
@@ -373,7 +375,7 @@ namespace PasswordKeeper
             // 
             // txtLogin
             // 
-            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLogin.Location = new System.Drawing.Point(113, 7);
             this.txtLogin.Name = "txtLogin";
@@ -382,8 +384,8 @@ namespace PasswordKeeper
             // 
             // pnlPasswords
             // 
-            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPasswords.Controls.Add(this.pgbClearClipboard);
             this.pnlPasswords.Controls.Add(this.lblSelectedEntry);
@@ -404,7 +406,7 @@ namespace PasswordKeeper
             // 
             // pgbClearClipboard
             // 
-            this.pgbClearClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.pgbClearClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgbClearClipboard.Location = new System.Drawing.Point(3, 598);
             this.pgbClearClipboard.Maximum = 150;
@@ -431,8 +433,8 @@ namespace PasswordKeeper
             this.olvPasswords.AllColumns.Add(this.colUserName);
             this.olvPasswords.AllColumns.Add(this.colPasswordUnreadable);
             this.olvPasswords.AllColumns.Add(this.colUrl);
-            this.olvPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.olvPasswords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.olvPasswords.CellEditUseWholeCell = false;
             this.olvPasswords.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -568,8 +570,8 @@ namespace PasswordKeeper
             // MyIEAdvancedBar1
             // 
             this.Controls.Add(lblTitle);
-            this.Controls.Add(this.pnlPasswords);
             this.Controls.Add(this.pnlLogin);
+            this.Controls.Add(this.pnlPasswords);
             this.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MyIEAdvancedBar1";
             this.Size = new System.Drawing.Size(303, 660);
@@ -667,6 +669,31 @@ namespace PasswordKeeper
         {
             // Synchronisation
             BarItem.ApplyChangesForAllTabs = true;
+
+            // Get connection
+            ConnectionModel currentConnection = new ConnectionModel
+            {
+                MachineMacAddress = Tools.GetMacAddress(),
+                MachineName = Environment.MachineName,
+                MachineUserName = Environment.UserName,
+                ConnectionDate = DateTime.Now
+            };
+
+            int? lastUserId = new ConnectionController(string.Concat(currentConnection.MachineUserName, currentConnection.MachineName)).GetConnectionTempUserId(currentConnection);
+
+            if (lastUserId != null)
+            {
+                currentConnection.UserId = Convert.ToInt32(lastUserId);
+
+                UserController controlUser = new UserController();
+
+                CurrentUser = controlUser.GetUser(currentConnection.UserId);
+
+                InitPanelPasswords();
+                LoadPasswordsList();
+
+                TogglePanelsLoginPasswords(TypePanel.Passwords);
+            }
         }
 
         internal void UpdateText(string text)
@@ -698,6 +725,8 @@ namespace PasswordKeeper
         /// <remarks>This button is also used to save a new user (registration mode) or update an existing user (edition mode once connected)</remarks>
         private void btnConnect_Click(object sender, EventArgs e)
         {
+            bool connectActionDone = false;
+
             switch (btnLoginAction.Text)
             {
                 case Tools.lblButtonConnect:
@@ -707,6 +736,8 @@ namespace PasswordKeeper
                         LoadPasswordsList();
 
                         TogglePanelsLoginPasswords(TypePanel.Passwords);
+
+                        connectActionDone = true;
                     }
 
                     break;
@@ -721,9 +752,17 @@ namespace PasswordKeeper
                     {
                         TogglePanelsLoginPasswords(TypePanel.Passwords);
                         InitPanelPasswords();
+
+                        connectActionDone = true;
                     }
 
                     break;
+            }
+
+            // Log connection
+            if (connectActionDone)
+            {
+                SetCurrentConnection();
             }
         }
 
@@ -798,7 +837,7 @@ namespace PasswordKeeper
             Clipboard.SetText(((PasswordModel)olvPasswords.FocusedObject).Login);
 
             WriteIeStatusBar("User copied in clipboard");
-            
+
             // Start countdown timer
             ClearClipboardCountDown();
         }
@@ -1205,6 +1244,23 @@ namespace PasswordKeeper
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// Store the current connection in database
+        /// </summary>
+        private void SetCurrentConnection()
+        {
+            ConnectionModel currentConnection = new ConnectionModel
+            {
+                UserId = CurrentUser.Id,
+                MachineMacAddress = Tools.GetMacAddress(),
+                MachineName = Environment.MachineName,
+                MachineUserName = Environment.UserName,
+                ConnectionDate = DateTime.Now
+            };
+
+            new ConnectionController(string.Concat(currentConnection.MachineUserName, currentConnection.MachineName)).Set(currentConnection);
         }
 
         /// <summary>
