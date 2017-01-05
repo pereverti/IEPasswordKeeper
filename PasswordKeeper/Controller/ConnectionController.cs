@@ -1,6 +1,8 @@
 ﻿using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Paddings;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
@@ -35,7 +37,7 @@ namespace PasswordKeeper
 
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
-                // Delete any previous row with the current id
+                // Delete any previous row which match
                 List<ConnectionTemp> existingConnections = (from conn in context.ConnectionTemps
                                                             where conn.ComputerMacAddress.Equals(encComputerMacAddress) &&
                                                                 conn.ComputerName.Equals(encComputerName) &&
@@ -61,6 +63,56 @@ namespace PasswordKeeper
         }
 
         /// <summary>
+        /// Delete a specify connection
+        /// </summary>
+        /// <param name="tmpConnectionToSet">connection to delete</param>
+        internal void DeleteConnection(ConnectionModel tmpConnectionToSet)
+        {
+            BCEngine engine = new BCEngine(new AesEngine(), Encoding.UTF8);
+            engine.SetPadding(new Pkcs7Padding());
+
+            string encComputerMacAddress = engine.Encrypt(string.Concat(Salt, tmpConnectionToSet.MachineMacAddress, Pepper), Key256Bits);
+            string encComputerName = engine.Encrypt(string.Concat(Salt, tmpConnectionToSet.MachineName, Pepper), Key256Bits);
+            string encComputerUserName = engine.Encrypt(string.Concat(Salt, tmpConnectionToSet.MachineUserName, Pepper), Key256Bits);
+
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            {
+                // Delete any previous row which match
+                List<ConnectionTemp> existingConnections = (from conn in context.ConnectionTemps
+                                                            where conn.ComputerMacAddress.Equals(encComputerMacAddress) &&
+                                                                conn.ComputerName.Equals(encComputerName) &&
+                                                                conn.ComputerUserName.Equals(encComputerUserName)
+                                                            select conn).ToList();
+
+                if (existingConnections.Count > 0)
+                {
+                    context.ConnectionTemps.RemoveRange(existingConnections);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clean all connections
+        /// </summary>
+        internal void SwipeOldConnections()
+        {
+            using (PasswordKeeperEntities context = new PasswordKeeperEntities())
+            {
+                // Delete any previous row older than an hour
+                List<ConnectionTemp> existingConnections = (from conn in context.ConnectionTemps
+                                                            where DbFunctions.AddHours(conn.ConnexionDate, 1) < DateTime.Now
+                                                            select conn).ToList();
+
+                if (existingConnections.Count > 0)
+                {
+                    context.ConnectionTemps.RemoveRange(existingConnections);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        /// <summary>
         /// Get the last user id for the given connection details
         /// </summary>
         /// <param name="tmpConnection">Connection data</param>
@@ -77,10 +129,10 @@ namespace PasswordKeeper
             using (PasswordKeeperEntities context = new PasswordKeeperEntities())
             {
                 int usrIdLogin = (from conn in context.ConnectionTemps
-                             where conn.ComputerMacAddress.Equals(encComputerMacAddress) &&
-                                conn.ComputerName.Equals(encComputerName) &&
-                                conn.ComputerUserName.Equals(encComputerUserName)
-                             select conn.IdUser).FirstOrDefault();
+                                  where conn.ComputerMacAddress.Equals(encComputerMacAddress) &&
+                                     conn.ComputerName.Equals(encComputerName) &&
+                                     conn.ComputerUserName.Equals(encComputerUserName)
+                                  select conn.IdUser).FirstOrDefault();
 
                 return usrIdLogin == 0 ? new int?() : usrIdLogin;
             }

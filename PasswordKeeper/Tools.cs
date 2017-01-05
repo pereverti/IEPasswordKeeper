@@ -18,6 +18,7 @@ namespace PasswordKeeper
             Edit
         }
 
+        // int values must match with CustomFieldType ids
         internal enum TypeField
         {
             Login = 1,
@@ -44,8 +45,6 @@ namespace PasswordKeeper
         internal const string lblButtonUpdate = "Update";
         internal const string LblLinkButtonRegister = "Register";
         internal const string LblLinkButtonCancel = "Cancel";
-
-        internal const int WM_UPDATE_OPTIONS = (0x400 + 3000);
 
         private static bool domainInvalid;
 
