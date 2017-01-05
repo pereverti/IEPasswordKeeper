@@ -6,7 +6,6 @@ using AddinExpress.IE;
 using System.Collections.Generic;
 using BrightIdeasSoftware;
 using System.Linq;
-using System.Net.NetworkInformation;
 
 namespace PasswordKeeper
 {
@@ -618,20 +617,6 @@ namespace PasswordKeeper
             }
         }
 
-        // :radioactive: TEST SHARING DATA BETWEEN TABS
-        public string OptionLogin
-        {
-            get { return txtLogin.Text; }
-            set { txtLogin.Text = value; }
-        }
-
-        // :radioactive: TEST SHARING DATA BETWEEN TABS
-        public string OptionPassword
-        {
-            get { return txtPassword.Text; }
-            set { txtPassword.Text = value; }
-        }
-
         #region Variables
 
         private UserModel CurrentUser;
@@ -696,11 +681,6 @@ namespace PasswordKeeper
             }
         }
 
-        internal void UpdateText(string text)
-        {
-            MessageBox.Show(string.Concat("It Works : ", text));
-        }
-
         /// <summary>
         /// Click on the register link
         /// </summary>
@@ -759,7 +739,7 @@ namespace PasswordKeeper
                     break;
             }
 
-            // Log connection
+            // Log connection in bdd
             if (connectActionDone)
             {
                 SetCurrentConnection();
@@ -884,24 +864,18 @@ namespace PasswordKeeper
             if (olvPasswords.FocusedItem == null)
                 return;
 
-            //mshtml.IHTMLElement elem = HTMLDocument.getElementById("Name");
-
-            //if (elem is mshtml.HTMLInputElement)
-            //{
-            //    mshtml.HTMLInputElement input = elem as mshtml.HTMLInputElement;
-            //    input.disabled = true;
-            //    input.click();
-            //}
-
             PasswordModel currentPassword = ((PasswordModel)olvPasswords.FocusedObject);
             List<CustomFieldModel> customFilelds = new CustomFieldController().GetCustomFields(currentPassword.Id);
+
             bool loginFilled = false;
             bool passwordfilled = false;
+
             string customLogin = customFilelds.Count > 0
                 ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Login) != null
                     ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Login).WebControlId
                     : string.Empty
                 : string.Empty;
+
             string customPassword = customFilelds.Count > 0
                 ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Password) != null
                     ? customFilelds.FirstOrDefault(cField => cField.Type == Tools.TypeField.Password).WebControlId

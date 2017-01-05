@@ -105,7 +105,6 @@ namespace PasswordKeeper
             this.LoadInMainProcess = false;
             this.ModuleName = "PasswordKeeper";
             this.OnConnect += new AddinExpress.IE.ADXIEConnect_EventHandler(this.IEModule_OnConnect);
-            this.OnSendMessage += new AddinExpress.IE.ADXIESendMessage_EventHandler(this.IEModule_OnSendMessage);
             this.OnShowContextMenu += new AddinExpress.IE.ADXIEShowContextMenu_EventHandler(this.IEModule_OnShowContextMenu);
             this.contextMenu.ResumeLayout(false);
 
@@ -166,12 +165,8 @@ namespace PasswordKeeper
             }
         }
 
-        // Context menu
-        private IOleCommandTarget TargetObj = null;
+        // Used for context menu
         private mshtml.IHTMLElement TargetElem = null;
-
-        public string MasterLogin { get; set; }
-        public string MasterPassword { get; set; }
 
         private void IEModule_OnConnect(object sender, int threadId)
         {
@@ -179,9 +174,6 @@ namespace PasswordKeeper
 
             toolStripAddLogin.Click += ToolStripAddLogin_Click;
             toolStripAddPassword.Click += ToolStripAddPassword_Click;
-
-            // :radioactive: Test for shared data
-            SendMessageToAll(Tools.WM_UPDATE_OPTIONS, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
@@ -198,8 +190,7 @@ namespace PasswordKeeper
             // Only controls
             if (e.ContextMenu != ADXIEShowContextMenuEventArgs.ADXIEDocContextMenu.Control)
                 return;
-
-            TargetObj = e.Container as IOleCommandTarget;
+            
             TargetElem = e.HTMLElement as mshtml.IHTMLElement;
 
             // Only input controls but no buttons
@@ -234,52 +225,5 @@ namespace PasswordKeeper
             if (Tools.IdCurrentPassword != null)
                 new CustomFieldController().AddOrUpdateCustomField(Tools.TypeField.Password, Convert.ToInt32(Tools.IdCurrentPassword), TargetElem.id);
         }
-
-        [StructLayout(LayoutKind.Sequential, Pack = 4)]
-        internal struct OLECMD
-        {
-            public uint cmdID;
-            public uint cmdf;
-        }
-
-        [ComImport, Guid("B722BCCB-4E68-101B-A2BC-00AA00404770"), InterfaceType(1)]
-        internal interface IOleCommandTarget
-        {
-            [PreserveSig]
-            int QueryStatus(IntPtr pguidCmdGroup, [In] uint cCmds, [In, Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] OLECMD[] prgCmds, [In, Out] IntPtr pCmdText);
-
-            [PreserveSig]
-            int Exec(IntPtr pCmdGroup, [In] uint nCmdID, [In] uint nCmdexecopt, [In] IntPtr pvaIn, [In] IntPtr pvaOut);
-        }
-
-        internal const int WM_USER = 0x0400;
-        internal const int WM_TEXTCHANGED = WM_USER + 10;
-        private ADXIEAdvancedBarItem adxieAdvancedBarItem1;
-
-        private void IEModule_OnSendMessage(ADXIESendMessageEventArgs e)
-        {
-            //if (e.Message == WM_TEXTCHANGED)
-            //{
-            //    if (adxieAdvancedBarItem1.BarObj != null)
-            //    {
-            //        IntPtr lpText = e.WParam;
-
-            //        try
-            //        {
-            //            string text = Marshal.PtrToStringUni(lpText);
-            //            ((MyIEAdvancedBar1)adxieAdvancedBarItem1.BarObj).UpdateText(text);
-            //        }
-            //        catch (Exception)
-            //        {
-            //        }
-            //        finally
-            //        {
-            //            if (lpText != IntPtr.Zero)
-            //                Marshal.ZeroFreeCoTaskMemUnicode(lpText);
-            //        }
-            //    }
-            //}
-        }
     }
 }
-
